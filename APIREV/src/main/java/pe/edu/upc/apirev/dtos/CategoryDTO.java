@@ -1,6 +1,5 @@
 package pe.edu.upc.apirev.dtos;
 
-import java.math.BigDecimal;
 
 public class CategoryDTO {
 
