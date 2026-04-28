@@ -68,7 +68,7 @@ public class ItemController {
     }
 
     @PutMapping("/actualizar")
-    public ResponseEntity<String> actualizar(@RequestBody ItemGeneralDTO dto) { //cuando actualizamos necesitamos el RB para enviar el valor en el body
+    public ResponseEntity<String> actualizar(@RequestBody ItemGeneralDTO dto) {
         Optional<Item> existente = iS.ListId(dto.getItemId());
         if (existente.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -84,6 +84,21 @@ public class ItemController {
 
         return ResponseEntity.ok("Articulo actualizado correctamente");
 
-        
+
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable int id) {
+        ModelMapper m = new ModelMapper();
+        Optional<Item> project = iS.ListId(id);
+
+        if (project.isPresent()) {
+            ItemGeneralDTO dto = m.map(project.get(), ItemGeneralDTO.class);
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Articulo no encontrado no encontrado");
+        }
+    }
+
 }
