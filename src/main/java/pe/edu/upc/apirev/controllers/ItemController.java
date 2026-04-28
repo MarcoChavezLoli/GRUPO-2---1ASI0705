@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.ItemDTO;
+import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
 import pe.edu.upc.apirev.entities.Category;
 import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.servicesinterfaces.ICategoryService;
@@ -38,7 +39,7 @@ public class ItemController {
     }
 
 
-    @PostMapping("/web")
+    @PostMapping("/registrar")
     public ResponseEntity<?> registrar(@RequestBody ItemDTO dto){
         ModelMapper m=new ModelMapper();
         Optional<Category> category = cS.ListId(dto.getIdCategory());
@@ -53,5 +54,36 @@ public class ItemController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable int id) {
+        Optional<Item> item = iS.ListId(id);
 
+        if (item.isPresent()) {
+            iS.Delete(id);
+            return ResponseEntity.ok("Articulo eliminado correctamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Articulo no encontrado");
+        }
+    }
+
+    @PutMapping("/actualizar")
+    public ResponseEntity<String> actualizar(@RequestBody ItemGeneralDTO dto) { //cuando actualizamos necesitamos el RB para enviar el valor en el body
+        Optional<Item> existente = iS.ListId(dto.getItemId());
+        if (existente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Articulo no encontrado");
+        }
+
+        Item i = existente.get();
+        i.setItemCondition(dto.getItemCondition());
+        i.setItemDescription(dto.getItemDescription());
+        i.setItemName(dto.getItemName());
+
+        iS.Update(i);
+
+        return ResponseEntity.ok("Articulo actualizado correctamente");
+
+        
+    }
 }

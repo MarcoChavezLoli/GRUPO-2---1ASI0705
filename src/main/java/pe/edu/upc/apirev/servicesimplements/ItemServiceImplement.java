@@ -8,6 +8,7 @@ import pe.edu.upc.apirev.repositories.IItemRepository;
 import pe.edu.upc.apirev.servicesinterfaces.IItemService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemServiceImplement implements IItemService {
@@ -23,5 +24,20 @@ public class ItemServiceImplement implements IItemService {
     @Override
     public Item insert(Item item) {
         return iR.save(item);
+    }
+
+    @Override
+    public Optional<Item> ListId(int id) {
+        return iR.findById(id);
+    }
+
+    @Override
+    public void Delete(int id) {
+        iR.deleteById(id);
+    }
+
+    @Override
+    public void Update(Item i) {
+        iR.save(i);
     }
 }
