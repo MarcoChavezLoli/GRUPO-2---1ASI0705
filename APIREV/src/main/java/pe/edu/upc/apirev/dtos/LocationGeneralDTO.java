@@ -1,38 +1,14 @@
-package pe.edu.upc.apirev.entities;
+package pe.edu.upc.apirev.dtos;
 
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "Location")
-public class Location {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class LocationGeneralDTO {
     private int idLocation;
-
-    @Column (name = "AddressLocation",length = 200, nullable = false)
     private String AddressLocation;
-
-    @Column (name = "LatitudeLocation",precision = 10, scale = 7, nullable = true)
     private BigDecimal LatitudeLocation;
-
-    @Column (name = "LongitudeLocation",precision = 10, scale = 7, nullable = true)
     private BigDecimal LongitudeLocation;
-    @Column (name = "DistrictLocation", length = 100, nullable = false)
     private String DistrictLocation;
-
-    public Location() {
-
-    }
-
-    public Location(int idLocation, String addressLocation, BigDecimal latitudeLocation, BigDecimal longitudeLocation, String districtLocation) {
-        this.idLocation = idLocation;
-        this.AddressLocation = addressLocation;
-        this.LatitudeLocation = latitudeLocation;
-        this.LongitudeLocation = longitudeLocation;
-        this.DistrictLocation = districtLocation;
-    }
 
     public int getIdLocation() {
         return idLocation;
