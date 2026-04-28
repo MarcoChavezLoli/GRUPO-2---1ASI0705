@@ -1,8 +1,5 @@
 package pe.edu.upc.apirev.dtos;
 
-import jakarta.persistence.*;
-import pe.edu.upc.apirev.entities.Category;
-
 public class ItemDTO {
 
     private String ItemName;
