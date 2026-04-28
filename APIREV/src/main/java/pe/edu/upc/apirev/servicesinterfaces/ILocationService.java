@@ -1,7 +1,6 @@
 package pe.edu.upc.apirev.servicesinterfaces;
 
 import pe.edu.upc.apirev.entities.Location;
-import pe.edu.upc.apirev.entities.Role;
 
 import java.util.List;
 import java.util.Optional;

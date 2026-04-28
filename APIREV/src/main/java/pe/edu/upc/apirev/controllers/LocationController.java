@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.LocationDTO;
 import pe.edu.upc.apirev.dtos.LocationGeneralDTO;
-import pe.edu.upc.apirev.dtos.RoleGeneralDTO;
 import pe.edu.upc.apirev.entities.Location;
-import pe.edu.upc.apirev.entities.Role;
 import pe.edu.upc.apirev.servicesinterfaces.ILocationService;
 
 import java.util.List;
