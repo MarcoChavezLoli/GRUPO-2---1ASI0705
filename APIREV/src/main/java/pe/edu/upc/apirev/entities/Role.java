@@ -12,17 +12,13 @@ public class Role {
     @Column(name = "NameRole", length = 50,nullable = false)
     private String NameRole;
 
-    @Column(name = "DescriptionRole", length = 150,nullable = false)
-    private String DescriptionRole;
-
     public Role() {
 
     }
 
-    public Role(int idRole, String nameRole, String descriptionRole) {
+    public Role(String nameRole, int idRole) {
+        this.NameRole = nameRole;
         this.idRole = idRole;
-        NameRole = nameRole;
-        DescriptionRole = descriptionRole;
     }
 
     public int getIdRole() {
@@ -31,14 +27,6 @@ public class Role {
 
     public void setIdRole(int idRole) {
         this.idRole = idRole;
-    }
-
-    public String getDescriptionRole() {
-        return DescriptionRole;
-    }
-
-    public void setDescriptionRole(String descriptionRole) {
-        DescriptionRole = descriptionRole;
     }
 
     public String getNameRole() {

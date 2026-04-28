@@ -6,6 +6,7 @@ public class LocationDTO {
     private String AddressLocation;
     private BigDecimal LatitudeLocation;
     private BigDecimal LongitudeLocation;
+    private String DistrictLocation;
 
     public String getAddressLocation() {
         return AddressLocation;
@@ -29,5 +30,13 @@ public class LocationDTO {
 
     public void setLatitudeLocation(BigDecimal latitudeLocation) {
         LatitudeLocation = latitudeLocation;
+    }
+
+    public String getDistrictLocation() {
+        return DistrictLocation;
+    }
+
+    public void setDistrictLocation(String districtLocation) {
+        DistrictLocation = districtLocation;
     }
 }
