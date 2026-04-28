@@ -18,16 +18,17 @@ public class Recycling {
     //private Material material;
 
 
-    //@ManyToOne
-    // @JoinColumn(name = "UserId")
-    // private User Usuario;
+    @ManyToOne
+    @JoinColumn(name = "idUser")
+     private User Usuario;
 
 
     public Recycling() {}
 
-    public Recycling(int recyclingId, String recyclingName) {
+    public Recycling(int recyclingId, String recyclingName, User usuario) {
         RecyclingId = recyclingId;
         RecyclingName = recyclingName;
+        Usuario = usuario;
     }
 
     public int getRecyclingId() {
@@ -44,5 +45,13 @@ public class Recycling {
 
     public void setRecyclingName(String recyclingName) {
         RecyclingName = recyclingName;
+    }
+
+    public User getUsuario() {
+        return Usuario;
+    }
+
+    public void setUsuario(User usuario) {
+        Usuario = usuario;
     }
 }
