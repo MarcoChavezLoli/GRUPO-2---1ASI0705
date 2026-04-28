@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0f82c8c0-5c8b-486f-9488-efcf7122f2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pe/edu/upc/apirev/entities/Image.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pe/edu/upc/apirev/controllers/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pe/edu/upc/apirev/controllers/ItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pe/edu/upc/apirev/controllers/RecyclingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pe/edu/upc/apirev/controllers/RecyclingController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +45,7 @@
     "git-widget-placeholder": "Muro-Gonzalez",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/AplicacionesWeb/GRUPO-2---1ASI0705",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.general"
   }
 }]]></component>
