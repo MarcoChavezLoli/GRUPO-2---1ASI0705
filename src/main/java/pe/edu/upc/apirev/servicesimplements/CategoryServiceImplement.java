@@ -20,4 +20,19 @@ public class CategoryServiceImplement implements ICategoryService {
     public Optional<Category> ListId(int id) {
         return cR.findById(id);
     }
+
+    @Override
+    public Category insert(Category category) {
+        return cR.save(category);
+    }
+
+    @Override
+    public void Delete(int id) {
+        cR.deleteById(id);
+    }
+
+    @Override
+    public void Update(Category c) {
+        cR.save(c);
+    }
 }
