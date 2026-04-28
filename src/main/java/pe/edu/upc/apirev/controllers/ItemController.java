@@ -5,14 +5,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.ItemDTO;
+import pe.edu.upc.apirev.entities.Category;
+import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.servicesinterfaces.ICategoryService;
 import pe.edu.upc.apirev.servicesinterfaces.IItemService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,5 +36,22 @@ public class ItemController {
             return ResponseEntity.ok(ListaArticulos);
         }
     }
+
+
+    @PostMapping("/web")
+    public ResponseEntity<?> registrar(@RequestBody ItemDTO dto){
+        ModelMapper m=new ModelMapper();
+        Optional<Category> category = cS.ListId(dto.getIdCategory());
+        if (category.isPresent()) {
+            Item item=m.map(dto, Item.class);
+            Item cur=iS.insert(item);
+            ItemDTO responseDTO=m.map(cur,ItemDTO.class);
+            return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error al registrar el articulo\nCategoria no encontrada");
+        }
+    }
+
 
 }

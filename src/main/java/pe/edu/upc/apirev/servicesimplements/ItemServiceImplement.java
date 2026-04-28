@@ -19,4 +19,9 @@ public class ItemServiceImplement implements IItemService {
     public List<Item> listar() {
         return iR.findAll();
     }
+
+    @Override
+    public Item insert(Item item) {
+        return iR.save(item);
+    }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 public interface IItemService {
 
     public List<Item> listar();
+    public Item insert(Item item);
 }
