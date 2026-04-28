@@ -6,10 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.CategoryDTO;
-import pe.edu.upc.apirev.dtos.LocationDTO;
 import pe.edu.upc.apirev.entities.Category;
 import pe.edu.upc.apirev.servicesinterfaces.ICategoryService;
-import pe.edu.upc.apirev.servicesinterfaces.ILocationService;
 
 import java.util.List;
 import java.util.Optional;
