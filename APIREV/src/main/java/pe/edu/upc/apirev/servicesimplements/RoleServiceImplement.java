@@ -1,6 +1,5 @@
 package pe.edu.upc.apirev.servicesimplements;
 
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.edu.upc.apirev.entities.Role;

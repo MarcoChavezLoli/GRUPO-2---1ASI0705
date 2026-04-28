@@ -1,6 +1,5 @@
 package pe.edu.upc.apirev.dtos;
 
-import jakarta.persistence.Column;
 
 import java.math.BigDecimal;
 

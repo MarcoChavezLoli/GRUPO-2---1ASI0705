@@ -1,6 +1,5 @@
 package pe.edu.upc.apirev.servicesinterfaces;
 
-import pe.edu.upc.apirev.entities.Role;
 import pe.edu.upc.apirev.entities.User;
 
 import java.util.List;
