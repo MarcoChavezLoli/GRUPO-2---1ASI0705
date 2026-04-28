@@ -1,1 +1,19 @@
 /.idea
+# Maven
+target/
+APIREV/target/
+
+# IntelliJ IDEA
+.idea/
+APIREV/.idea/
+*.iml
+
+# Logs
+*.log
+
+# Variables de entorno
+.env
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
