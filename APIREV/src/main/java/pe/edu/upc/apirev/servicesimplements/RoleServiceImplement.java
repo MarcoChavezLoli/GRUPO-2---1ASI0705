@@ -38,4 +38,9 @@ public class RoleServiceImplement implements IRoleService {
         rRepository.deleteById(id);
     }
 
+    @Override
+    public List<Object[]> quantityRoleByUser() {
+        return rRepository.quantityRoleByUser();
+    }
+
 }
