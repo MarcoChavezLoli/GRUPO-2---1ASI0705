@@ -1,5 +1,6 @@
 package pe.edu.upc.apirev.servicesimplements;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.edu.upc.apirev.entities.Material;
@@ -38,4 +39,12 @@ public class MaterialServiceImplement implements IMaterialService {
     public void update(Material material) {
         mR.save(material);
     }
+}
+=======
+import org.springframework.stereotype.Service;
+import pe.edu.upc.apirev.servicesinterfaces.IMaterialService;
+
+@Service
+public class MaterialServiceImplement implements IMaterialService {
+
 }

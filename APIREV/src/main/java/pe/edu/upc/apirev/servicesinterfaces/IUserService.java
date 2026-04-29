@@ -11,4 +11,5 @@ public interface IUserService {
     public void update(User u);
     public Optional<User> listId(int id);
     public void delete(int id);
+    List<Object[]> usersWithoutBarter();
 }

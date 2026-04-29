@@ -1,5 +1,6 @@
 package pe.edu.upc.apirev.servicesinterfaces;
 
+
 import pe.edu.upc.apirev.entities.CollectionPoint;
 import java.util.List;
 
@@ -10,3 +11,7 @@ public interface ICollectionPointService {
     public CollectionPoint listId(int idCollectionPoint);
     public void update(CollectionPoint collectionPoint);
 }
+
+public interface ICollectionPointService {
+}
+
