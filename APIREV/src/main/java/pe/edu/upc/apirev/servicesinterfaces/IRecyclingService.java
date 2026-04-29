@@ -11,4 +11,6 @@ public interface IRecyclingService {
     public Recycling insert(Recycling r);
     public Optional<Recycling> ListId(int id);
     public void Delete(int id);
+    public void Update(Recycling r);
+
 }

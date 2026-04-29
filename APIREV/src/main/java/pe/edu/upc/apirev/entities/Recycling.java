@@ -25,9 +25,10 @@ public class Recycling {
 
     public Recycling() {}
 
-    public Recycling(int recyclingId, String recyclingName, User usuario) {
+    public Recycling(int recyclingId, String recyclingName, Material material, User usuario) {
         RecyclingId = recyclingId;
         RecyclingName = recyclingName;
+        this.material = material;
         Usuario = usuario;
     }
 
@@ -45,6 +46,14 @@ public class Recycling {
 
     public void setRecyclingName(String recyclingName) {
         RecyclingName = recyclingName;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public User getUsuario() {

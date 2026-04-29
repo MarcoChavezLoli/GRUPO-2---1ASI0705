@@ -5,7 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
+import pe.edu.upc.apirev.dtos.LocationGeneralDTO;
 import pe.edu.upc.apirev.dtos.RecyclingDTO;
+import pe.edu.upc.apirev.entities.Item;
+import pe.edu.upc.apirev.entities.Location;
 import pe.edu.upc.apirev.entities.Recycling;
 import pe.edu.upc.apirev.entities.User;
 import pe.edu.upc.apirev.servicesinterfaces.IRecyclingService;
@@ -56,6 +60,38 @@ public class RecyclingController {
         if (reciclaje.isPresent()) {
             rS.Delete(id);
             return ResponseEntity.ok("Reciclaje eliminado correctamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Reciclaje no encontrado");
+        }
+    }
+
+    @PutMapping("/actualizar")
+    public ResponseEntity<String> actualizar(@RequestBody RecyclingDTO dto) {
+        Optional<Recycling> existente = rS.ListId(dto.getRecyclingId());
+        if (existente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Reciclaje no encontrado");
+        }
+
+        Recycling r = existente.get();
+        r.setRecyclingName(dto.getRecyclingName());
+
+        rS.Update(r);
+
+        return ResponseEntity.ok("Reciclaje actualizado correctamente");
+
+
+    }
+
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable int id) {
+        ModelMapper m = new ModelMapper();
+        Optional<Recycling> recycling = rS.ListId(id);
+
+        if (recycling.isPresent()) {
+            RecyclingDTO dto = m.map(recycling.get(), RecyclingDTO.class);
+            return ResponseEntity.ok(dto);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Reciclaje no encontrado");
