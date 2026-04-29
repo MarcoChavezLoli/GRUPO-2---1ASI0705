@@ -4,7 +4,7 @@ package pe.edu.upc.apirev.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Reciclaje")
+@Table(name = "Recycling")
 public class Recycling {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,9 +13,9 @@ public class Recycling {
     @Column (name = "RecyclingName",length = 50, nullable = false)
     private String RecyclingName;
 
-    //@ManyToOne
-    // @JoinColumn(name = "MaterialId")
-    //private Material material;
+    @ManyToOne
+    @JoinColumn(name = "MaterialId")
+    private Material material;
 
 
     @ManyToOne

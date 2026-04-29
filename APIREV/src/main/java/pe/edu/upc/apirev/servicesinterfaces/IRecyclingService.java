@@ -1,8 +1,5 @@
 package pe.edu.upc.apirev.servicesinterfaces;
 
-import pe.edu.upc.apirev.entities.Category;
-import pe.edu.upc.apirev.entities.Item;
-import pe.edu.upc.apirev.entities.Location;
 import pe.edu.upc.apirev.entities.Recycling;
 
 import java.util.List;
