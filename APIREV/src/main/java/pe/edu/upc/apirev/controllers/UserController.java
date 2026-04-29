@@ -5,12 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.apirev.dtos.QueryNativeUser;
 import pe.edu.upc.apirev.dtos.UserDTO;
 import pe.edu.upc.apirev.entities.Role;
 import pe.edu.upc.apirev.entities.User;
 import pe.edu.upc.apirev.servicesinterfaces.IRoleService;
 import pe.edu.upc.apirev.servicesinterfaces.IUserService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -90,5 +93,25 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Usuario no encontrado");
         }
+    }
+
+    @GetMapping("/lista-usuarios-trueque")
+    public ResponseEntity<?>obtenerListaUsuarioSinTrueque(){
+        List<Object[]> lista=uS.usersWithoutBarter();
+        if(lista.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay lista de usuarios sin trueques");
+        }
+        List<QueryNativeUser> respuesta=new ArrayList<>();
+        for(Object[] fila:lista){
+            QueryNativeUser dto=new QueryNativeUser();
+            dto.setIdUser(((Number) fila[0]).intValue());
+            dto.setUserName((String) fila[1]);
+            dto.setUserEmail((String) fila[2]);
+            dto.setUserRegistrationDate((LocalDate) fila[3]);
+
+            respuesta.add(dto);
+        }
+        return  ResponseEntity.ok(respuesta);
     }
 }

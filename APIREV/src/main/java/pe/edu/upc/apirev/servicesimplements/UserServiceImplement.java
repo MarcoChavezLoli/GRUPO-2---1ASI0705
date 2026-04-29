@@ -38,4 +38,9 @@ public class UserServiceImplement implements IUserService {
     public void delete(int id) {
         uR.deleteById(id);
     }
+
+    @Override
+    public List<Object[]> usersWithoutBarter() {
+        return uR.usersWithoutBarter();
+    }
 }

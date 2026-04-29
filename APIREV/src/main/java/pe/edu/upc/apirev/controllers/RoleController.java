@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.apirev.dtos.QueryNativeRole;
 import pe.edu.upc.apirev.dtos.RoleDTO;
 import pe.edu.upc.apirev.dtos.RoleGeneralDTO;
 import pe.edu.upc.apirev.entities.Role;
 import pe.edu.upc.apirev.servicesinterfaces.IRoleService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,5 +79,23 @@ public class RoleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Rol no encontrado");
         }
+    }
+
+    @GetMapping("/cantidad-usuarios-rol")
+    public ResponseEntity<?>obtenerCantidadUsuarioRol(){
+        List<Object[]> listaCantidad=rS.quantityRoleByUser();
+        if(listaCantidad.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay roles asignados");
+        }
+        List<QueryNativeRole> respuesta=new ArrayList<>();
+        for(Object[] fila:listaCantidad){
+            QueryNativeRole dto=new QueryNativeRole();
+            dto.setNameRole((String)fila[0]);
+            dto.setQuantityUser(((Number)fila[1]).intValue());
+
+            respuesta.add(dto);
+        }
+        return  ResponseEntity.ok(respuesta);
     }
 }
