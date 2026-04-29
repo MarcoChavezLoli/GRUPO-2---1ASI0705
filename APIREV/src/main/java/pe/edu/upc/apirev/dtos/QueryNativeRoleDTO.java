@@ -1,6 +1,6 @@
 package pe.edu.upc.apirev.dtos;
 
-public class QueryNativeRole {
+public class QueryNativeRoleDTO {
     private String NameRole;
     private int quantityUser;
 

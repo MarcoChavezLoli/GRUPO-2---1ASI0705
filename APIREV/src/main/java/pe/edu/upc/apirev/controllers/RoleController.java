@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.QueryNativeRole;
+import pe.edu.upc.apirev.dtos.QueryNativeRoleDTO;
 import pe.edu.upc.apirev.dtos.RoleDTO;
 import pe.edu.upc.apirev.dtos.RoleGeneralDTO;
 import pe.edu.upc.apirev.entities.Role;
@@ -88,9 +88,9 @@ public class RoleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No hay roles asignados");
         }
-        List<QueryNativeRole> respuesta=new ArrayList<>();
+        List<QueryNativeRoleDTO> respuesta=new ArrayList<>();
         for(Object[] fila:listaCantidad){
-            QueryNativeRole dto=new QueryNativeRole();
+            QueryNativeRoleDTO dto=new QueryNativeRoleDTO();
             dto.setNameRole((String)fila[0]);
             dto.setQuantityUser(((Number)fila[1]).intValue());
 
