@@ -10,5 +10,4 @@ public interface IMaterialService {
     public void delete(int idMaterial);
     public Material listId(int idMaterial);
     public void update(Material material);
-public interface IMaterialService {
 }

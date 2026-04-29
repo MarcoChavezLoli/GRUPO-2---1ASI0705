@@ -63,4 +63,5 @@ public class Recycling {
     public void setUsuario(User usuario) {
         Usuario = usuario;
     }
+/*  asd */
 }

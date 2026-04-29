@@ -53,13 +53,4 @@ public class MaterialController {
         return dto;
     }
 
-    @PutMapping
-    public void update(@RequestBody MaterialDTO dto) {
-        Material m = new Material();
-        m.setIdMaterial(dto.getIdMaterial());
-        m.setMaterialName(dto.getMaterialName());
-        m.setMaterialDescription(dto.getMaterialDescription());
-        m.setMaterialType(dto.getMaterialType());
-        mS.update(m);
-    }
 }
