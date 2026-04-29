@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.QueryNativeUser;
+import pe.edu.upc.apirev.dtos.QueryNativeUserDTO;
 import pe.edu.upc.apirev.dtos.UserDTO;
 import pe.edu.upc.apirev.entities.Role;
 import pe.edu.upc.apirev.entities.User;
@@ -102,9 +102,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No hay lista de usuarios sin trueques");
         }
-        List<QueryNativeUser> respuesta=new ArrayList<>();
+        List<QueryNativeUserDTO> respuesta=new ArrayList<>();
         for(Object[] fila:lista){
-            QueryNativeUser dto=new QueryNativeUser();
+            QueryNativeUserDTO dto=new QueryNativeUserDTO();
             dto.setIdUser(((Number) fila[0]).intValue());
             dto.setUserName((String) fila[1]);
             dto.setUserEmail((String) fila[2]);

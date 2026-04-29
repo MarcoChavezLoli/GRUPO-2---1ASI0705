@@ -2,7 +2,7 @@ package pe.edu.upc.apirev.dtos;
 
 import java.time.LocalDate;
 
-public class QueryNativeUser {
+public class QueryNativeUserDTO {
 
     private int idUser;
     private String UserName;
