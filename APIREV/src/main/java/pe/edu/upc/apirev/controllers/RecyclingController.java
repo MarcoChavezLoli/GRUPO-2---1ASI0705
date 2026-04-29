@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
-import pe.edu.upc.apirev.dtos.LocationGeneralDTO;
-import pe.edu.upc.apirev.dtos.RecyclingDTO;
+import pe.edu.upc.apirev.dtos.*;
 import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.entities.Location;
 import pe.edu.upc.apirev.entities.Recycling;
@@ -15,6 +13,7 @@ import pe.edu.upc.apirev.entities.User;
 import pe.edu.upc.apirev.servicesinterfaces.IRecyclingService;
 import pe.edu.upc.apirev.servicesinterfaces.IUserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,5 +97,24 @@ public class RecyclingController {
         }
     }
 
+
+    @GetMapping("/cantidad-Reciclajes-Categoria")
+    public ResponseEntity<?>obtenerCantidadReciclajesUsuario(){
+        List<Object[]> listaCantidad=rS.quantityRecyclingNative();
+        if(listaCantidad.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay Reciclajes");
+        }
+        List<QueryNative2DTO> respuesta=new ArrayList<>();
+        for(Object[] fila:listaCantidad){
+            QueryNative2DTO dto=new QueryNative2DTO();
+
+            dto.setIdUser(((Number)fila[0]).intValue());
+            dto.setNameUser((String) fila[1]);
+            dto.setQuantityRecycling(((Number)fila[2]).intValue());
+            respuesta.add(dto);
+        }
+        return  ResponseEntity.ok(respuesta);
+    }
 
 }
