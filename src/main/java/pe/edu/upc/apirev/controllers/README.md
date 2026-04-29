@@ -1,3 +1,0 @@
-Eliminar el readme
-
-
