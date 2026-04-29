@@ -11,7 +11,3 @@ public interface ICollectionPointService {
     public CollectionPoint listId(int idCollectionPoint);
     public void update(CollectionPoint collectionPoint);
 }
-
-public interface ICollectionPointService {
-}
-
