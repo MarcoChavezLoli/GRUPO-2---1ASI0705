@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.ItemDTO;
 import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
+import pe.edu.upc.apirev.dtos.QueryNativeDTO;
 import pe.edu.upc.apirev.entities.Category;
 import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.servicesinterfaces.ICategoryService;
 import pe.edu.upc.apirev.servicesinterfaces.IItemService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,6 +100,25 @@ public class ItemController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Articulo no encontrado no encontrado");
         }
+    }
+
+    @GetMapping("/cantidad-Articulo-Categoria")
+    public ResponseEntity<?>obtenerCantidadArticuloCategoria(){
+        List<Object[]> listaCantidad=iS.quantityItemNative();
+        if(listaCantidad.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay articulos");
+        }
+        List<QueryNativeDTO> respuesta=new ArrayList<>();
+        for(Object[] fila:listaCantidad){
+            QueryNativeDTO dto=new QueryNativeDTO();
+
+            dto.setIdCategory(((Number)fila[0]).intValue());
+            dto.setNameCategory((String) fila[1]);
+            dto.setQuantityItems(((Number)fila[2]).intValue());
+            respuesta.add(dto);
+        }
+        return  ResponseEntity.ok(respuesta);
     }
 
 }
