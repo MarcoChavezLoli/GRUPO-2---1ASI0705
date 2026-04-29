@@ -8,9 +8,19 @@ import pe.edu.upc.apirev.entities.User;
 public class RecyclingDTO {
     private int RecyclingId;
     private String RecyclingName;
-    //private int idmaterial;
+    private int idmaterial;
     private int Userid;
 
+
+
+    public int getIdmaterial() {
+        return idmaterial;
+
+    }
+
+    public void setIdmaterial(int idmaterial) {
+        this.idmaterial = idmaterial;
+    }
 
     public int getRecyclingId() {
         return RecyclingId;

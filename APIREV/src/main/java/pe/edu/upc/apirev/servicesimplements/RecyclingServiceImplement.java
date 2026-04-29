@@ -34,4 +34,14 @@ public class RecyclingServiceImplement implements IRecyclingService {
     public void Delete(int id) { rR.deleteById(id);
 
     }
+
+    @Override
+    public void Update(Recycling r) {
+        rR.save(r);
+    }
+
+    @Override
+    public List<Object[]> quantityRecyclingNative() {
+        return rR.quantityRecyclingByUser();
+    }
 }
