@@ -7,5 +7,4 @@ import pe.edu.upc.apirev.entities.CollectionPoint;
 @Repository
 public interface ICollectionPointRepository extends JpaRepository<CollectionPoint, Integer> {
 
-
 }

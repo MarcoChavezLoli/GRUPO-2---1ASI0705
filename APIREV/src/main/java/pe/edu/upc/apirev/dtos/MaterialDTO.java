@@ -1,32 +1,10 @@
-package pe.edu.upc.apirev.entities;
+package pe.edu.upc.apirev.dtos;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "materials")
-public class Material {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MaterialDTO {
     private int idMaterial;
-
-    @Column(name = "MaterialName", length = 100, nullable = false)
     private String MaterialName;
-
-    @Column(name = "MaterialDescription", length = 250, nullable = false)
     private String MaterialDescription;
-
-    @Column(name = "MaterialType", length = 100, nullable = false)
     private String MaterialType;
-
-    public Material(int idMaterial, String materialName, String materialDescription, String materialType) {
-        this.idMaterial = idMaterial;
-        this.MaterialName = materialName;
-        this.MaterialDescription = materialDescription;
-        this.MaterialType = materialType;
-    }
-
-    public Material() {
-    }
 
     public int getIdMaterial() {
         return idMaterial;
