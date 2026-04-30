@@ -7,6 +7,7 @@ import pe.edu.upc.apirev.repositories.ICollectionPointRepository;
 import pe.edu.upc.apirev.servicesinterfaces.ICollectionPointService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CollectionPointServiceImplement implements ICollectionPointService {
@@ -15,8 +16,8 @@ public class CollectionPointServiceImplement implements ICollectionPointService 
     private ICollectionPointRepository cpR;
 
     @Override
-    public void insert(CollectionPoint collectionPoint) {
-        cpR.save(collectionPoint);
+    public CollectionPoint insert(CollectionPoint collectionPoint) {
+        return cpR.save(collectionPoint);
     }
 
     @Override
@@ -30,8 +31,8 @@ public class CollectionPointServiceImplement implements ICollectionPointService 
     }
 
     @Override
-    public CollectionPoint listId(int idCollectionPoint) {
-        return cpR.findById(idCollectionPoint).orElse(new CollectionPoint());
+    public Optional<CollectionPoint> listId(int idCollectionPoint) {
+        return cpR.findById(idCollectionPoint);
     }
 
     @Override

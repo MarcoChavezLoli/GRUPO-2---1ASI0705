@@ -3,7 +3,7 @@ package pe.edu.upc.apirev.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "collection_points")
+@Table(name = "CollectionPoint")
 public class CollectionPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

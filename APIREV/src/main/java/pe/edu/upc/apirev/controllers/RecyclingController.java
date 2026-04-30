@@ -6,8 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.*;
-import pe.edu.upc.apirev.entities.Item;
-import pe.edu.upc.apirev.entities.Location;
 import pe.edu.upc.apirev.entities.Recycling;
 import pe.edu.upc.apirev.entities.User;
 import pe.edu.upc.apirev.servicesinterfaces.IRecyclingService;

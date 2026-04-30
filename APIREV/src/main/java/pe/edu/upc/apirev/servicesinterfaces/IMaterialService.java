@@ -2,12 +2,16 @@ package pe.edu.upc.apirev.servicesinterfaces;
 
 
 import pe.edu.upc.apirev.entities.Material;
+import pe.edu.upc.apirev.entities.Recycling;
+
 import java.util.List;
+import java.util.Optional;
 
 public interface IMaterialService {
-    public void insert(Material material);
-    public List<Material> list();
-    public void delete(int idMaterial);
-    public Material listId(int idMaterial);
-    public void update(Material material);
+
+    public List<Material> list ();
+    public Material insert(Material m);
+    public Optional<Material> ListId(int id);
+    public void Delete(int id);
+    public void Update(Material m);
 }

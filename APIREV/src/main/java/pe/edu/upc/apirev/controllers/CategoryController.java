@@ -40,7 +40,7 @@ public class CategoryController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Category> category = cS.ListId(id);
 

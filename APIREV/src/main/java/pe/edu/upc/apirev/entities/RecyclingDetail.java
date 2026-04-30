@@ -22,7 +22,7 @@ public class RecyclingDetail {
     private String TraceabilityStatus;
 
     @ManyToOne
-    @JoinColumn(name = "CollectionPointID")
+    @JoinColumn(name = "idCollectionPoint")
     private CollectionPoint collectionPoint;
 
     public RecyclingDetail() {
