@@ -1,69 +1,101 @@
 package pe.edu.upc.apirev.controllers;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.CollectionPointDTO;
+import pe.edu.upc.apirev.dtos.ItemDTO;
+import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
+import pe.edu.upc.apirev.entities.Category;
 import pe.edu.upc.apirev.entities.CollectionPoint;
+import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.servicesinterfaces.ICollectionPointService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/collectionpoints")
+@RequestMapping("/api/Punto-Acopio")
 public class CollectionPointController {
 
     @Autowired
     private ICollectionPointService cpS;
 
-    @PostMapping
-    public void insert(@RequestBody CollectionPointDTO dto) {
-        CollectionPoint cp = new CollectionPoint();
-        cp.setCollectionPointName(dto.getCollectionPointName());
-        cp.setCollectionPointAddress(dto.getCollectionPointAddress());
-        cp.setCollectionPointLatitude(dto.getCollectionPointLatitude());
-        cp.setCollectionPointLongitude(dto.getCollectionPointLongitude());
-        cpS.insert(cp);
+    @PostMapping("/registrar")
+    public ResponseEntity<?> registrar(@RequestBody CollectionPointDTO dto){
+        ModelMapper m=new ModelMapper();
+            CollectionPoint collectionPoint =m.map(dto, CollectionPoint.class);
+        CollectionPoint cur=cpS.insert(collectionPoint);
+        CollectionPointDTO responseDTO=m.map(cur,CollectionPointDTO.class);
+            return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping
-    public List<CollectionPointDTO> list() {
-        return cpS.list().stream().map(x -> {
-            CollectionPointDTO dto = new CollectionPointDTO();
-            dto.setIdCollectionPoint(x.getIdCollectionPoint());
-            dto.setCollectionPointName(x.getCollectionPointName());
-            dto.setCollectionPointAddress(x.getCollectionPointAddress());
-            dto.setCollectionPointLatitude(x.getCollectionPointLatitude());
-            dto.setCollectionPointLongitude(x.getCollectionPointLongitude());
-            return dto;
-        }).collect(Collectors.toList());
+    public ResponseEntity<?> Listar(){
+        ModelMapper m = new ModelMapper();
+        List<CollectionPointDTO> ListaPuntoAcopio = cpS.list()
+                .stream().map(y->m.map(y, CollectionPointDTO.class))
+                .collect(Collectors.toList());
+
+        if (ListaPuntoAcopio.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La lista está vacía");
+        }else {
+            return ResponseEntity.ok(ListaPuntoAcopio);
+        }
     }
+
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id) {
-        cpS.delete(id);
+    public ResponseEntity<String> eliminar(@PathVariable int id) {
+
+        Optional<CollectionPoint> collectionPoint = cpS.listId(id);
+
+        if (collectionPoint.isPresent()) {
+            cpS.delete(id);
+            return ResponseEntity.ok("Punto de acopio eliminado correctamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Punto de acopio");
+        }
     }
+
+
 
     @GetMapping("/{id}")
-    public CollectionPointDTO listId(@PathVariable("id") int id) {
-        CollectionPoint cp = cpS.listId(id);
-        CollectionPointDTO dto = new CollectionPointDTO();
-        dto.setIdCollectionPoint(cp.getIdCollectionPoint());
-        dto.setCollectionPointName(cp.getCollectionPointName());
-        dto.setCollectionPointAddress(cp.getCollectionPointAddress());
-        dto.setCollectionPointLatitude(cp.getCollectionPointLatitude());
-        dto.setCollectionPointLongitude(cp.getCollectionPointLongitude());
-        return dto;
+    public ResponseEntity<?> buscarPorId(@PathVariable int id) {
+        ModelMapper m = new ModelMapper();
+        Optional<CollectionPoint> collectionPoint = cpS.listId(id);
+
+        if (collectionPoint.isPresent()) {
+            CollectionPointDTO dto = m.map(collectionPoint.get(), CollectionPointDTO.class);
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Punto de acopio no encontrado no encontrado");
+        }
     }
 
-    @PutMapping
-    public void update(@RequestBody CollectionPointDTO dto) {
-        CollectionPoint cp = new CollectionPoint();
-        cp.setIdCollectionPoint(dto.getIdCollectionPoint());
-        cp.setCollectionPointName(dto.getCollectionPointName());
-        cp.setCollectionPointAddress(dto.getCollectionPointAddress());
-        cp.setCollectionPointLatitude(dto.getCollectionPointLatitude());
-        cp.setCollectionPointLongitude(dto.getCollectionPointLongitude());
-        cpS.update(cp);
+    @PutMapping("/actualizar")
+    public ResponseEntity<String> actualizar(@RequestBody CollectionPointDTO dto) {
+        Optional<CollectionPoint> existente = cpS.listId(dto.getIdCollectionPoint());
+        if (existente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Punto de acopio no encontrado");
+        }
+
+        CollectionPoint c = existente.get();
+        c.setCollectionPointLongitude(c.getCollectionPointLongitude());
+        c.setCollectionPointAddress(c.getCollectionPointAddress());
+        c.setCollectionPointLatitude(c.getCollectionPointLatitude());
+        c.setCollectionPointName(dto.getCollectionPointName());
+
+        cpS.update(c);
+
+        return ResponseEntity.ok("Punto de acopio actualizado correctamente");
+
+
     }
 }

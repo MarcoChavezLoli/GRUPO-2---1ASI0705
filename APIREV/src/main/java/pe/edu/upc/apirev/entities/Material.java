@@ -3,7 +3,7 @@ package pe.edu.upc.apirev.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "materials")
+@Table(name = "Material")
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

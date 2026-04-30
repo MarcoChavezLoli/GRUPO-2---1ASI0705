@@ -14,7 +14,7 @@ public class Recycling {
     private String RecyclingName;
 
     @ManyToOne
-    @JoinColumn(name = "MaterialId")
+    @JoinColumn(name = "idMaterial")
     private Material material;
 
 
@@ -63,5 +63,4 @@ public class Recycling {
     public void setUsuario(User usuario) {
         Usuario = usuario;
     }
-/*  asd */
 }

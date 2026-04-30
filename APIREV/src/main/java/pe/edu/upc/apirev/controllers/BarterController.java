@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping ("/api/truque")
+@RequestMapping ("/api/trueque")
 public class BarterController {
 
      @Autowired
@@ -24,7 +24,7 @@ public class BarterController {
      @Autowired
      private IBarterService bS;
 
-    @GetMapping("/truque/listar")
+    @GetMapping("/trueque/listar")
     public ResponseEntity<List<BarterDTO>> listar() {
         ModelMapper m = new ModelMapper();
         List<BarterDTO> lista = bS.list().stream()

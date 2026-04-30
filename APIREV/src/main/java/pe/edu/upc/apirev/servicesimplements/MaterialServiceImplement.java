@@ -7,6 +7,7 @@ import pe.edu.upc.apirev.repositories.IMaterialRepository;
 import pe.edu.upc.apirev.servicesinterfaces.IMaterialService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MaterialServiceImplement implements IMaterialService {
@@ -15,27 +16,26 @@ public class MaterialServiceImplement implements IMaterialService {
     private IMaterialRepository mR;
 
     @Override
-    public void insert(Material material) {
-        mR.save(material);
-    }
-
-    @Override
     public List<Material> list() {
         return mR.findAll();
     }
 
     @Override
-    public void delete(int idMaterial) {
-        mR.deleteById(idMaterial);
+    public Material insert(Material material) { return mR.save(material); }
+
+    @Override
+    public Optional<Material> ListId(int id) {  return mR.findById(id); }
+
+    @Override
+    public void Delete(int id) {
+        mR.deleteById(id);
     }
 
     @Override
-    public Material listId(int idMaterial) {
-        return mR.findById(idMaterial).orElse(new Material());
+    public void Update(Material m) { mR.save(m); }
+
     }
 
-    @Override
-    public void update(Material material) {
-        mR.save(material);
-    }
-}
+
+
+
