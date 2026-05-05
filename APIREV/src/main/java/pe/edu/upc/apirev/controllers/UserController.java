@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.QueryNativeUserDTO;
 import pe.edu.upc.apirev.dtos.UserDTO;
-import pe.edu.upc.apirev.entities.Role;
+import pe.edu.upc.apirev.dtos.UserGeneralDTO;
 import pe.edu.upc.apirev.entities.User;
 import pe.edu.upc.apirev.servicesinterfaces.IRoleService;
 import pe.edu.upc.apirev.servicesinterfaces.IUserService;
@@ -25,30 +25,52 @@ public class UserController {
     private IUserService uS;
     @Autowired
     private IRoleService rS;
-    @GetMapping("/usuarios/listar")
-    public ResponseEntity<List<UserDTO>> listar() {
-        ModelMapper m = new ModelMapper();
-        List<UserDTO> lista = uS.list().stream()
-                .map(y -> m.map(y, UserDTO.class))
-                .collect(Collectors.toList());
 
+    @GetMapping("/usuarios/listar")
+    public ResponseEntity<List<UserGeneralDTO>> listar() {
+        List<UserGeneralDTO> lista = uS.list().stream()
+                .map(user -> {
+                    UserGeneralDTO dto = new UserGeneralDTO();
+                    dto.setIdUser(user.getIdUser());
+                    dto.setUserName(user.getUserName());
+                    dto.setUserLastName(user.getUserLastName());
+                    dto.setUserIdentityDocument(user.getUserIdentityDocument());
+                    dto.setUserEmail(user.getUserEmail());
+                    dto.setUserRegistrationDate(user.getUserRegistrationDate());
+                    return dto;
+                })
+                .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
-
-    @PostMapping("/usuarios/registrar")
+    @PostMapping("/registar/usuarios")
     public ResponseEntity<?> registrar(@RequestBody UserDTO dto){
-        ModelMapper m=new ModelMapper();
-        Optional<Role> role = rS.listId(dto.getIdRole());
-        if (role.isPresent()) {
-            User us=m.map(dto, User.class);
-            User use= uS.insert(us);
-            UserDTO responseDTO=m.map(use,UserDTO.class);
-            return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Rol no encontrado\nSolicitud de registro denegada");
+        if (dto.getUserName() == null || dto.getUserName().trim().isEmpty() ||
+                dto.getUserLastName() == null || dto.getUserLastName().trim().isEmpty() ||
+                dto.getUserIdentityDocument() == null || dto.getUserIdentityDocument().trim().isEmpty() ||
+                dto.getUserEmail() == null || dto.getUserEmail().trim().isEmpty() ||
+                dto.getUserPassword() == null || dto.getUserPassword().trim().isEmpty()) {
+
+            return ResponseEntity.badRequest().body("Campos obligatorios vacíos.");
         }
+        if (dto.getUserIdentityDocument().trim().length() != 8) {
+            return ResponseEntity.badRequest().body("El DNI debe tener 8 caracteres.");
+        }
+        User user = new User();
+        user.setUserName(dto.getUserName());
+        user.setUserLastName(dto.getUserLastName());
+        user.setUserIdentityDocument(dto.getUserIdentityDocument());
+        user.setUserEmail(dto.getUserEmail());
+        user.setUserPassword(dto.getUserPassword());
+        user.setUserRegistrationDate(LocalDate.now());
+        user.setEnabled(true);
+
+        User saved = uS.insert(user);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
+
+
     @PutMapping("/usuarios/actualizar")
     public ResponseEntity<String> actualizar(@RequestBody UserDTO dto) {
         Optional<User> existente = uS.listId(dto.getIdUser());
