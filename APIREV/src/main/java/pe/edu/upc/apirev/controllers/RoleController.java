@@ -9,7 +9,9 @@ import pe.edu.upc.apirev.dtos.QueryNativeRoleDTO;
 import pe.edu.upc.apirev.dtos.RoleDTO;
 import pe.edu.upc.apirev.dtos.RoleGeneralDTO;
 import pe.edu.upc.apirev.entities.Role;
+import pe.edu.upc.apirev.entities.User;
 import pe.edu.upc.apirev.servicesinterfaces.IRoleService;
+import pe.edu.upc.apirev.servicesinterfaces.IUserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 public class RoleController {
     @Autowired
     private IRoleService rS;
+    @Autowired
+    private IUserService uS;
 
     @GetMapping("/listar/roles")
     public ResponseEntity<List<RoleDTO>> listar() {
@@ -32,12 +36,20 @@ public class RoleController {
         return ResponseEntity.ok(lista);
     }
     @PostMapping("/registar/roles")
-    public ResponseEntity<RoleGeneralDTO> registrar(@RequestBody RoleGeneralDTO dto){
-        ModelMapper m=new ModelMapper();
-        Role c=m.map(dto, Role.class);
-        Role cur= rS.insert(c);
-        RoleGeneralDTO responseDTO=m.map(cur,RoleGeneralDTO.class);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    public ResponseEntity<?> registrar(@RequestBody RoleGeneralDTO dto) {
+
+
+        Optional<User> userOpt = uS.listId(dto.getIdUser());
+
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Usuario no encontrado.");
+        }
+
+        Role role = new Role();
+        role.setNameRole(dto.getNameRole());
+        role.setUser(userOpt.get());
+        rS.insert(role);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Rol registrado correctamente.");
     }
 
     @PutMapping("/roles/actualiza")

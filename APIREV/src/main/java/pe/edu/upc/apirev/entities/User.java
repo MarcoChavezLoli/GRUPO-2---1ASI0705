@@ -2,42 +2,49 @@ package pe.edu.upc.apirev.entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
-@Entity
-@Table (name = "User")
-public class User {
+@Entity@Table (name = "users")
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUser;
+
     @Column(name = "UserName", length = 200,nullable = false)
-    private String UserName;
+    private String  userName;
     @Column(name = "UserLastName", length = 200,nullable = false)
-    private String UserLastName;
+    private String userLastName;
     @Column(name = "UserIdentityDocument", length = 8,nullable = false,unique = true)
-    private String UserIdentityDocument;
+    private String userIdentityDocument;
     @Column(name = "UserEmail", length = 100,nullable = false,unique = true)
-    private String UserEmail;
-    @Column(name = "UserPassword", length = 250,nullable = false)
-    private String UserPassword;
+    private String userEmail;
+    @Column(nullable = false)
+    private String userPassword;
     @Column(name = "UserRegistrationDate", nullable = false)
-    private LocalDate UserRegistrationDate;
-    @ManyToOne
-    @JoinColumn(name = "idRole")
-    private Role role;
+    private LocalDate userRegistrationDate;
+    @Column(nullable = false)
+    private Boolean enabled;
 
-    public User(int idUser, String userName, String userLastName, String userIdentityDocument, String userEmail, String userPassword, LocalDate userRegistrationDate, Role role) {
-        this.idUser = idUser;
-        this.UserName = userName;
-        this.UserLastName = userLastName;
-        this.UserIdentityDocument = userIdentityDocument;
-        this.UserEmail = userEmail;
-        this.UserPassword = userPassword;
-        this.UserRegistrationDate = userRegistrationDate;
-        this.role = role;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Role> roles;
+
+    public User()
+    {
+
     }
-    public  User() {
 
+    public User(String userName, String userIdentityDocument, String userEmail, String userLastName, String userPassword, LocalDate userRegistrationDate, Boolean enabled, List<Role> roles) {
+        this.userName = userName;
+        this.userIdentityDocument = userIdentityDocument;
+        this.userEmail = userEmail;
+        this.userLastName = userLastName;
+        this.userPassword = userPassword;
+        this.userRegistrationDate = userRegistrationDate;
+        this.enabled = enabled;
+        this.roles = roles;
     }
 
     public int getIdUser() {
@@ -49,58 +56,66 @@ public class User {
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getUserLastName() {
-        return UserLastName;
+        return userLastName;
     }
 
     public void setUserLastName(String userLastName) {
-        UserLastName = userLastName;
+        this.userLastName = userLastName;
     }
 
     public String getUserIdentityDocument() {
-        return UserIdentityDocument;
+        return userIdentityDocument;
     }
 
     public void setUserIdentityDocument(String userIdentityDocument) {
-        UserIdentityDocument = userIdentityDocument;
+        this.userIdentityDocument = userIdentityDocument;
     }
 
     public String getUserEmail() {
-        return UserEmail;
+        return userEmail;
     }
 
     public void setUserEmail(String userEmail) {
-        UserEmail = userEmail;
+        this.userEmail = userEmail;
     }
 
     public String getUserPassword() {
-        return UserPassword;
+        return userPassword;
     }
 
     public void setUserPassword(String userPassword) {
-        UserPassword = userPassword;
+        this.userPassword = userPassword;
     }
 
     public LocalDate getUserRegistrationDate() {
-        return UserRegistrationDate;
+        return userRegistrationDate;
     }
 
     public void setUserRegistrationDate(LocalDate userRegistrationDate) {
-        UserRegistrationDate = userRegistrationDate;
+        this.userRegistrationDate = userRegistrationDate;
     }
 
-    public Role getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

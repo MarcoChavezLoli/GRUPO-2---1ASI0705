@@ -1,18 +1,17 @@
 package pe.edu.upc.apirev.dtos;
 
-
-
-
 import java.time.LocalDate;
 
-public class UserDTO {
+
+public class UserGeneralDTO {
+
     private int idUser;
     private String userName;
     private String userLastName;
     private String userIdentityDocument;
     private String userEmail;
     private LocalDate userRegistrationDate;
-    private String userPassword;
+
 
     public int getIdUser() {
         return idUser;
@@ -62,11 +61,5 @@ public class UserDTO {
         this.userRegistrationDate = userRegistrationDate;
     }
 
-    public String getUserPassword() {
-        return userPassword;
-    }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
 }
