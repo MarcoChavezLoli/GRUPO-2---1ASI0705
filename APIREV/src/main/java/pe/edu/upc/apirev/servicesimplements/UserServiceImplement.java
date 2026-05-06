@@ -43,4 +43,9 @@ public class UserServiceImplement implements IUserService {
     public List<Object[]> usersWithoutBarter() {
         return uR.usersWithoutBarter();
     }
+
+    @Override
+    public Optional<User> findByUserEmail(String userEmail) {
+        return uR.findByUserEmail(userEmail);
+    }
 }
