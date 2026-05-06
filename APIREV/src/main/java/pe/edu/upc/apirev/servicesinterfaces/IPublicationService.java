@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IPublicationService {
     public List<Publication> list();
-    public Publication insert(Publication pu);
+    public Publication insert(Publication p);
     
 }
