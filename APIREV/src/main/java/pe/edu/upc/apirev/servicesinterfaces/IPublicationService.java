@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IPublicationService {
     public List<Publication> list();
+    
 }
