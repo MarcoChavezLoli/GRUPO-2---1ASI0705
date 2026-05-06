@@ -11,4 +11,6 @@ public interface ICollectionPointService {
     public void delete(int idCollectionPoint);
     public Optional<CollectionPoint> listId(int idCollectionPoint);
     public void update(CollectionPoint collectionPoint);
+
+    List<Object[]> countPointsByAddressNative();
 }
