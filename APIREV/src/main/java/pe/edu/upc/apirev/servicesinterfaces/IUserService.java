@@ -12,4 +12,5 @@ public interface IUserService {
     public Optional<User> listId(int id);
     public void delete(int id);
     List<Object[]> usersWithoutBarter();
+    Optional<User> findByUserEmail(String userEmail);
 }

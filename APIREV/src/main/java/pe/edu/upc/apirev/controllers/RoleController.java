@@ -35,7 +35,7 @@ public class RoleController {
 
         return ResponseEntity.ok(lista);
     }
-    @PostMapping("/registar/roles")
+    @PostMapping("/registrar/roles")
     public ResponseEntity<?> registrar(@RequestBody RoleGeneralDTO dto) {
 
 

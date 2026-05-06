@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.QueryNativeUserDTO;
 import pe.edu.upc.apirev.dtos.UserDTO;
@@ -42,32 +43,43 @@ public class UserController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
-    @PostMapping("/registar/usuarios")
+    @PostMapping("/registrar/usuarios")
     public ResponseEntity<?> registrar(@RequestBody UserDTO dto){
+
+        // Validaciones
         if (dto.getUserName() == null || dto.getUserName().trim().isEmpty() ||
                 dto.getUserLastName() == null || dto.getUserLastName().trim().isEmpty() ||
                 dto.getUserIdentityDocument() == null || dto.getUserIdentityDocument().trim().isEmpty() ||
                 dto.getUserEmail() == null || dto.getUserEmail().trim().isEmpty() ||
                 dto.getUserPassword() == null || dto.getUserPassword().trim().isEmpty()) {
-
             return ResponseEntity.badRequest().body("Campos obligatorios vacíos.");
         }
+
         if (dto.getUserIdentityDocument().trim().length() != 8) {
             return ResponseEntity.badRequest().body("El DNI debe tener 8 caracteres.");
         }
+
+
         User user = new User();
         user.setUserName(dto.getUserName());
         user.setUserLastName(dto.getUserLastName());
         user.setUserIdentityDocument(dto.getUserIdentityDocument());
         user.setUserEmail(dto.getUserEmail());
-        user.setUserPassword(dto.getUserPassword());
+        user.setUserPassword(new BCryptPasswordEncoder().encode(dto.getUserPassword())); // hash
         user.setUserRegistrationDate(LocalDate.now());
         user.setEnabled(true);
 
         User saved = uS.insert(user);
 
+        UserGeneralDTO response = new UserGeneralDTO();
+        response.setIdUser(saved.getIdUser());
+        response.setUserName(saved.getUserName());
+        response.setUserLastName(saved.getUserLastName());
+        response.setUserIdentityDocument(saved.getUserIdentityDocument());
+        response.setUserEmail(saved.getUserEmail());
+        response.setUserRegistrationDate(saved.getUserRegistrationDate());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
