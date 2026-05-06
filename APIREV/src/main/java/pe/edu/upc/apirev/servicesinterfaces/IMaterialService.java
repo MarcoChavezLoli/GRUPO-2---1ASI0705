@@ -2,7 +2,6 @@ package pe.edu.upc.apirev.servicesinterfaces;
 
 
 import pe.edu.upc.apirev.entities.Material;
-import pe.edu.upc.apirev.entities.Recycling;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +13,6 @@ public interface IMaterialService {
     public Optional<Material> ListId(int id);
     public void Delete(int id);
     public void Update(Material m);
+    
+    List<Object[]> searchByTypeNative(String type);
 }

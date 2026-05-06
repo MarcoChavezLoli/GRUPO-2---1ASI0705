@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import pe.edu.upc.apirev.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User,Integer> {
@@ -15,4 +16,6 @@ public interface IUserRepository extends JpaRepository<User,Integer> {
             " where b.id_barter is null\n" +
             " order by u.user_registration_date desc", nativeQuery = true)
     List<Object[]> usersWithoutBarter();
+
+    Optional<User> findByUserEmail(String userEmail);
 }

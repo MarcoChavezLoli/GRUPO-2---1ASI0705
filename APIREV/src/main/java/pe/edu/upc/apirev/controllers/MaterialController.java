@@ -5,15 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.ItemDTO;
-import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
 import pe.edu.upc.apirev.dtos.MaterialDTO;
-import pe.edu.upc.apirev.dtos.RecyclingDTO;
-import pe.edu.upc.apirev.entities.Category;
-import pe.edu.upc.apirev.entities.Item;
+import pe.edu.upc.apirev.dtos.QueryNativeMaterialTypeDTO;
 import pe.edu.upc.apirev.entities.Material;
 import pe.edu.upc.apirev.servicesinterfaces.IMaterialService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,5 +73,25 @@ public class MaterialController {
 
 
     }
+@GetMapping("/buscartipo")
+    public ResponseEntity<?> searchByTypeNative(@RequestParam String type) {
+        List<Object[]> rawList = mS.searchByTypeNative(type);
+        
+        if (rawList.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se encontraron materiales para el tipo: " + type);
+        }
 
+        List<QueryNativeMaterialTypeDTO> response = new ArrayList<>();
+        for (Object[] row : rawList) {
+            QueryNativeMaterialTypeDTO dto = new QueryNativeMaterialTypeDTO();
+            
+            dto.setIdMaterial(((Number) row[0]).intValue()); 
+            dto.setMaterialName((String) row[1]); 
+            dto.setMaterialType((String) row[2]); 
+            
+            response.add(dto);
+        }
+        return ResponseEntity.ok(response);
+    }
 }

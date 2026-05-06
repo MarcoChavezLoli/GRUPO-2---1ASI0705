@@ -6,13 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.CollectionPointDTO;
-import pe.edu.upc.apirev.dtos.ItemDTO;
-import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
-import pe.edu.upc.apirev.entities.Category;
+import pe.edu.upc.apirev.dtos.QueryNativeCollectionPointDTO;
 import pe.edu.upc.apirev.entities.CollectionPoint;
-import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.servicesinterfaces.ICollectionPointService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -97,5 +95,26 @@ public class CollectionPointController {
         return ResponseEntity.ok("Punto de acopio actualizado correctamente");
 
 
+    }
+
+@GetMapping("/conteo-por-direccion")
+    public ResponseEntity<?> countPointsByAddress() {
+        List<Object[]> rawList = cpS.countPointsByAddressNative();
+        
+        if (rawList.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay puntos de acopio registrados");
+        }
+
+        List<QueryNativeCollectionPointDTO> response = new ArrayList<>();
+        for (Object[] row : rawList) {
+            QueryNativeCollectionPointDTO dto = new QueryNativeCollectionPointDTO();
+            
+            dto.setAddress((String) row[0]);
+            dto.setQuantityPoints(((Number) row[1]).intValue());
+            
+            response.add(dto);
+        }
+        return ResponseEntity.ok(response);
     }
 }

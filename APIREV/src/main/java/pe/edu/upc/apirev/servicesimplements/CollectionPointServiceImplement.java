@@ -39,4 +39,9 @@ public class CollectionPointServiceImplement implements ICollectionPointService 
     public void update(CollectionPoint collectionPoint) {
         cpR.save(collectionPoint);
     }
+    
+    @Override
+    public List<Object[]> countPointsByAddressNative() {
+        return cpR.countPointsByAddressNative();
+    }
 }

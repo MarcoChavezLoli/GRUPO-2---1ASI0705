@@ -34,8 +34,10 @@ public class MaterialServiceImplement implements IMaterialService {
     @Override
     public void Update(Material m) { mR.save(m); }
 
+    @Override
+    public List<Object[]> searchByTypeNative(String type) {
+        return mR.searchMaterialsByTypeNative(type);
     }
-
-
+}
 
 

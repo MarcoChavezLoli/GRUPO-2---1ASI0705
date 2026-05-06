@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class BarterDTO {
     private int idBarter;
-    private String DescriptionBarter;
-    private boolean StatusBarter;
-    private LocalDate DateBarter;
+    private String descriptionBarter;
+    private boolean statusBarter;
+    private LocalDate dateBarter;
     private int idUser;
 
     public int getIdBarter() {
@@ -18,27 +18,27 @@ public class BarterDTO {
     }
 
     public String getDescriptionBarter() {
-        return DescriptionBarter;
+        return descriptionBarter;
     }
 
     public void setDescriptionBarter(String descriptionBarter) {
-        DescriptionBarter = descriptionBarter;
+        descriptionBarter = descriptionBarter;
     }
 
     public boolean isStatusBarter() {
-        return StatusBarter;
+        return statusBarter;
     }
 
     public void setStatusBarter(boolean statusBarter) {
-        StatusBarter = statusBarter;
+        statusBarter = statusBarter;
     }
 
     public LocalDate getDateBarter() {
-        return DateBarter;
+        return dateBarter;
     }
 
     public void setDateBarter(LocalDate dateBarter) {
-        DateBarter = dateBarter;
+        dateBarter = dateBarter;
     }
 
     public int getIdUser() {
