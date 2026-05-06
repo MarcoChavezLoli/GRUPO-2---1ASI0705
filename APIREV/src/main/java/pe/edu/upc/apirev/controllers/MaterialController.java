@@ -73,23 +73,25 @@ public class MaterialController {
 
 
     }
-    @GetMapping("/buscar-tipo")
-    public List<QueryNativeMaterialTypeDTO> searchByTypeNative(@RequestParam String type) {
+@GetMapping("/buscartipo")
+    public ResponseEntity<?> searchByTypeNative(@RequestParam String type) {
         List<Object[]> rawList = mS.searchByTypeNative(type);
-        List<QueryNativeMaterialTypeDTO> transformedList = new ArrayList<>();
-
-        for (Object[] column : rawList) {
-            QueryNativeMaterialTypeDTO dto = new QueryNativeMaterialTypeDTO();
-
-            dto.setIdMaterial(Integer.parseInt(column[0].toString())); 
-
-            dto.setMaterialName(column[1].toString()); 
-
-            dto.setMaterialType(column[2].toString()); 
-            
-            transformedList.add(dto);
-        }
         
-        return transformedList;
+        if (rawList.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se encontraron materiales para el tipo: " + type);
+        }
+
+        List<QueryNativeMaterialTypeDTO> response = new ArrayList<>();
+        for (Object[] row : rawList) {
+            QueryNativeMaterialTypeDTO dto = new QueryNativeMaterialTypeDTO();
+            
+            dto.setIdMaterial(((Number) row[0]).intValue()); 
+            dto.setMaterialName((String) row[1]); 
+            dto.setMaterialType((String) row[2]); 
+            
+            response.add(dto);
+        }
+        return ResponseEntity.ok(response);
     }
 }

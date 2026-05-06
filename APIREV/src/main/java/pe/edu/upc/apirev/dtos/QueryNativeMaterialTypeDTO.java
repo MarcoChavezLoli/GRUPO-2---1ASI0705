@@ -5,7 +5,6 @@ public class QueryNativeMaterialTypeDTO {
     private String materialName;
     private String materialType;
 
-    // Getters y Setters
     public int getIdMaterial() {
         return idMaterial;
     }
