@@ -1,6 +1,5 @@
 package pe.edu.upc.apirev.servicesinterfaces;
 
-import pe.edu.upc.apirev.entities.Recycling;
 import pe.edu.upc.apirev.entities.RecyclingDetail;
 
 import java.util.List;

@@ -5,15 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.ItemDTO;
-import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
 import pe.edu.upc.apirev.dtos.MaterialDTO;
-import pe.edu.upc.apirev.dtos.RecyclingDTO;
-import pe.edu.upc.apirev.entities.Category;
-import pe.edu.upc.apirev.entities.Item;
+import pe.edu.upc.apirev.dtos.QueryNativeMaterialTypeDTO;
 import pe.edu.upc.apirev.entities.Material;
 import pe.edu.upc.apirev.servicesinterfaces.IMaterialService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,5 +73,23 @@ public class MaterialController {
 
 
     }
+    @GetMapping("/buscar-tipo")
+    public List<QueryNativeMaterialTypeDTO> searchByTypeNative(@RequestParam String type) {
+        List<Object[]> rawList = mS.searchByTypeNative(type);
+        List<QueryNativeMaterialTypeDTO> transformedList = new ArrayList<>();
 
+        for (Object[] column : rawList) {
+            QueryNativeMaterialTypeDTO dto = new QueryNativeMaterialTypeDTO();
+
+            dto.setIdMaterial(Integer.parseInt(column[0].toString())); 
+
+            dto.setMaterialName(column[1].toString()); 
+
+            dto.setMaterialType(column[2].toString()); 
+            
+            transformedList.add(dto);
+        }
+        
+        return transformedList;
+    }
 }
