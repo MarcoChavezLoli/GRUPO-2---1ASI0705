@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.QueryNativeRoleDTO;
 import pe.edu.upc.apirev.dtos.RoleDTO;
@@ -35,9 +36,10 @@ public class RoleController {
 
         return ResponseEntity.ok(lista);
     }
-    @PostMapping("/registrar/roles")
-    public ResponseEntity<?> registrar(@RequestBody RoleGeneralDTO dto) {
 
+    @PostMapping("/registrar/roles")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> registrar(@RequestBody RoleGeneralDTO dto) {
 
         Optional<User> userOpt = uS.listId(dto.getIdUser());
 

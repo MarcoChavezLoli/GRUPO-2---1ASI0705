@@ -10,7 +10,6 @@ import pe.edu.upc.apirev.dtos.QueryNativeUserDTO;
 import pe.edu.upc.apirev.dtos.UserDTO;
 import pe.edu.upc.apirev.dtos.UserGeneralDTO;
 import pe.edu.upc.apirev.entities.User;
-import pe.edu.upc.apirev.servicesinterfaces.IRoleService;
 import pe.edu.upc.apirev.servicesinterfaces.IUserService;
 
 import java.time.LocalDate;
@@ -24,8 +23,6 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private IUserService uS;
-    @Autowired
-    private IRoleService rS;
 
     @GetMapping("/usuarios/listar")
     public ResponseEntity<List<UserGeneralDTO>> listar() {
