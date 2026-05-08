@@ -1,7 +1,5 @@
 package pe.edu.upc.apirev.dtos;
-
 import pe.edu.upc.apirev.entities.User;
-
 import java.time.LocalDate;
 
 public class ChatDTO {

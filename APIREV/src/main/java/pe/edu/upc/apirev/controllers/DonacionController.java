@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.ChatDTO;
 import pe.edu.upc.apirev.dtos.DonacionDTO;
-import pe.edu.upc.apirev.entities.Chat;
 import pe.edu.upc.apirev.entities.Donacion;
 import pe.edu.upc.apirev.servicesinterfaces.IDonacionService;
 
