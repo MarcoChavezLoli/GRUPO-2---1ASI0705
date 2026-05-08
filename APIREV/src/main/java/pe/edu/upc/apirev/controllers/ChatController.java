@@ -20,7 +20,7 @@ public class ChatController {
     @Autowired
     private IChatService Cs;
 
-    @PostMapping("/Registrarchat")
+    @PostMapping("/Registrar")
     public ResponseEntity<ChatDTO> Registrar(@RequestBody ChatDTO cdto){
         ModelMapper m =new ModelMapper();
         Chat c=m.map(cdto,Chat.class);

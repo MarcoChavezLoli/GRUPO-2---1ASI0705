@@ -20,7 +20,7 @@ public class DetalleDonacionController {
     @Autowired
     private IDetalleDonacionService Dds;
 
-    @PostMapping("/Registrarchat")
+    @PostMapping("/Registrar")
     public ResponseEntity<DetalleDonacionDTO> Registrar(@RequestBody DetalleDonacionDTO dddto){
         ModelMapper m =new ModelMapper();
         DetalleDonacion Dd=m.map(dddto,DetalleDonacion.class);
@@ -58,11 +58,11 @@ public class DetalleDonacionController {
         Optional<DetalleDonacion> existente = Dds.listid(Dddto.getIddetalledonacion());
         if (existente.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Chat no encontrado");
+                    .body("Detalle de la Donacion no encontrada");
         }
         if (Dddto.getFecharegistrada() == null || Dddto.getDescripciondetalle() == null) {
             return ResponseEntity.badRequest()
-                    .body("Las fechas no pueden ser nulas");
+                    .body("Las fechas no pueden ser nulas ni la descripcion de la Donacion");
         }
 
         DetalleDonacion dd = existente.get();
@@ -73,7 +73,7 @@ public class DetalleDonacionController {
 
         Dds.update(dd);
 
-        return ResponseEntity.ok("Chat actualizado correctamente");
+        return ResponseEntity.ok("El Detalle de la Donacion fue actualizada correctamente");
     }
 
 }
