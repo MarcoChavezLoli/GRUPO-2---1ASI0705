@@ -12,9 +12,9 @@ public class DetalleDonacion {
     private int iddetalledonacion;
     @Column(name="descripciondetalle",length = 25,nullable = false)
     private String descripciondetalle;
-    @Column(name="fecharegistrada",length = 25,nullable = false)
+    @Column(name="fecharegistrada",nullable = false)
     private LocalDate fecharegistrada;
-    @Column(name="estadotrazabilidad",length = 25,nullable = false)
+    @Column(name="estadotrazabilidad",nullable = false)
     private boolean estadotrazabilidad;
 
     @ManyToOne

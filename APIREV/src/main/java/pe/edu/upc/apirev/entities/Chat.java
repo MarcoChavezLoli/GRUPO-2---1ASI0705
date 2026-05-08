@@ -13,7 +13,7 @@ public class Chat {
     private int idchat;
     @Column(name="Contenido",length = 25, nullable = false)
     private String chatcontenido;
-    @Column(name="fechaenvio",length = 25,nullable = false)
+    @Column(name="fechaenvio",nullable = false)
     private LocalDate chatfechaenvio;
     @Column(name="Estado",nullable = false)
     private boolean chatstatus;
@@ -21,10 +21,6 @@ public class Chat {
     @ManyToOne
     @JoinColumn(name="iduser")
     private User idUser;
-
-    @ManyToOne
-    @JoinColumn(name="iduser")
-    private User idUser2;
 
     public Chat() {
     }
@@ -77,11 +73,4 @@ public class Chat {
         this.idUser = idUser;
     }
 
-    public User getIdUser2() {
-        return idUser2;
-    }
-
-    public void setIdUser2(User idUser2) {
-        this.idUser2 = idUser2;
-    }
 }
