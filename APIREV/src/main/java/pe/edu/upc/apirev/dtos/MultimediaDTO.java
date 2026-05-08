@@ -1,9 +1,19 @@
 package pe.edu.upc.apirev.dtos;
 
 public class MultimediaDTO {
+    private int idMultimedia;
     private String nameMultimedia;
     private String descriptionMultimedia;
     private int idPublication;
+
+
+    public int getIdMultimedia() {
+        return idMultimedia;
+    }
+
+    public void setIdMultimedia(int idMultimedia) {
+        this.idMultimedia = idMultimedia;
+    }
 
     public String getNameMultimedia() {
         return nameMultimedia;

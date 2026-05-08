@@ -8,9 +8,9 @@ public class Multimedia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMultimedia;
-    @Column(name = "NameMultimedia", nullable = false, length = 100)
+    @Column(name = "nameMultimedia", nullable = false, length = 100)
     private String nameMultimedia;
-    @Column(name = "DescriptionMultimedia", nullable = false, length = 250)
+    @Column(name = "descriptionMultimedia", nullable = false, length = 250)
     private String descriptionMultimedia;
 
     @ManyToOne
