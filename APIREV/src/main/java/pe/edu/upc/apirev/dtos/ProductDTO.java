@@ -1,12 +1,20 @@
 package pe.edu.upc.apirev.dtos;
 
 public class ProductDTO {
-
+    private int IdProduct;
     private String NameProduct;
     private String DescriptionProduct;
     private String ConservationStatus;
     private int idBarter;
     private int IdCategory;
+
+    public int getIdProduct() {
+        return IdProduct;
+    }
+
+    public void setIdProduct(int idProduct) {
+        IdProduct = idProduct;
+    }
 
     public String getNameProduct() {
         return NameProduct;
