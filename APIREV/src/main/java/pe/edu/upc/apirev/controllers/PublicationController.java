@@ -19,6 +19,7 @@ public class PublicationController {
 
     @Autowired
     private IPublicationService pServ;
+
     @GetMapping("/publicacion/listar")
 
     public ResponseEntity<List<PublicationDTO>> listar() {
@@ -30,12 +31,12 @@ public class PublicationController {
     }
 
     @PostMapping("/publication/web")
-    public ResponseEntity<PublicationDTO> registrar(@RequestBody PublicationDTO dto){
-        ModelMapper m=new ModelMapper();
-        Publication c=m.map(dto, Publication.class);
-        Publication cur= pServ.insert(c);
-        PublicationDTO responseDTO=m.map(cur,PublicationDTO.class);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    public ResponseEntity<PublicationDTO> registrar(@RequestBody PublicationDTO dto) {
+        ModelMapper m = new ModelMapper();
+        Publication c = m.map(dto, Publication.class);
+        Publication cur = pServ.insert(c);
+        PublicationDTO responseDTO = m.map(cur, PublicationDTO.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping("/publication/{id}")
@@ -59,7 +60,7 @@ public class PublicationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Proyecto no encontrado");
         }
-        if (dto.getCreationDate() == null ) {
+        if (dto.getCreationDate() == null) {
             return ResponseEntity.badRequest()
                     .body("Las fechas no pueden ser nulas");
         }
@@ -84,10 +85,5 @@ public class PublicationController {
                     .body("Proyecto no encontrado");
         }
     }
-
-
-
-
-
 
 }
