@@ -7,6 +7,7 @@ import pe.edu.upc.apirev.repositories.IChatRepository;
 import pe.edu.upc.apirev.servicesinterfaces.IChatService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChatServiceImplement implements IChatService {
@@ -33,5 +34,10 @@ public class ChatServiceImplement implements IChatService {
     @Override
     public void delete(int id) {
         Cr.deleteById(id);
+    }
+
+    @Override
+    public Optional<Chat> listid(int id) {
+        return Cr.findById(id);
     }
 }

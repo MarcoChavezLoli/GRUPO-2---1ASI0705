@@ -3,6 +3,7 @@ package pe.edu.upc.apirev.servicesinterfaces;
 import pe.edu.upc.apirev.entities.Chat;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IChatService {
 
@@ -10,5 +11,6 @@ public interface IChatService {
     public List<Chat> list();
     public void update(Chat c);
     public void delete (int id);
+    public Optional<Chat> listid(int id);
 
 }

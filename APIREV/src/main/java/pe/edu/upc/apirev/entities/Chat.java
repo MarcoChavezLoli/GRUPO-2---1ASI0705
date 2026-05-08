@@ -19,9 +19,12 @@ public class Chat {
     private boolean chatstatus;
 
     @ManyToOne
-    @JoinColumn(name="name = \"usuario_amigos\"joinColumns = @JoinColumn(name = \"usuario_id\"),\n" +
-            "        inverseJoinColumns = @JoinColumn(name = \"amigo_id\")")
+    @JoinColumn(name="iduser")
     private User idUser;
+
+    @ManyToOne
+    @JoinColumn(name="iduser")
+    private User idUser2;
 
     public Chat() {
     }
@@ -72,5 +75,13 @@ public class Chat {
 
     public void setIdUser(User idUser) {
         this.idUser = idUser;
+    }
+
+    public User getIdUser2() {
+        return idUser2;
+    }
+
+    public void setIdUser2(User idUser2) {
+        this.idUser2 = idUser2;
     }
 }

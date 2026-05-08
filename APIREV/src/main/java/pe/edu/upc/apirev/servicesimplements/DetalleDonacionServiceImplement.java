@@ -7,6 +7,7 @@ import pe.edu.upc.apirev.repositories.IDetalleDonacionRepository;
 import pe.edu.upc.apirev.servicesinterfaces.IDetalleDonacionService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DetalleDonacionServiceImplement implements IDetalleDonacionService {
@@ -33,5 +34,10 @@ public class DetalleDonacionServiceImplement implements IDetalleDonacionService 
     @Override
     public void delete(int id) {
         Ddr.deleteById(id);
+    }
+
+    @Override
+    public Optional<DetalleDonacion> listid(int id) {
+        return Ddr.findById(id);
     }
 }
