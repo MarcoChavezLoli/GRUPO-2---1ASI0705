@@ -7,9 +7,13 @@ import pe.edu.upc.apirev.entities.PublicationSave;
 
 public interface IPublicationSaveService {
     public List<PublicationSave> list();
+
     public PublicationSave insert(PublicationSave p);
+
     public Optional<PublicationSave> listId(int id);
-    public void update(PublicationSave p);
+
+    public PublicationSave update(PublicationSave p);
+
     public void delete(int id);
 
 }

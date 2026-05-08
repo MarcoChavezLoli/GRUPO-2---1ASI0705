@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.PublicationDTO;
+
 import pe.edu.upc.apirev.dtos.PublicationSaveDTO;
-import pe.edu.upc.apirev.entities.Publication;
+
 import pe.edu.upc.apirev.entities.PublicationSave;
 import pe.edu.upc.apirev.servicesinterfaces.IPublicationSaveService;
 
@@ -41,7 +41,6 @@ public class PublicationSaveController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
-
     @GetMapping("/publication/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
@@ -55,8 +54,6 @@ public class PublicationSaveController {
                     .body("Proyecto no encontrado");
         }
     }
-
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable int id) {

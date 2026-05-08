@@ -14,7 +14,6 @@ public class RecyclingServiceImplement implements IRecyclingService {
     @Autowired
     public IRecyclingRepository rR;
 
-
     @Override
     public List<Recycling> list() {
         return rR.findAll();
@@ -31,7 +30,8 @@ public class RecyclingServiceImplement implements IRecyclingService {
     }
 
     @Override
-    public void Delete(int id) { rR.deleteById(id);
+    public void delete(int id) {
+        rR.deleteById(id);
 
     }
 }

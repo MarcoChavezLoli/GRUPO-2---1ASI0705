@@ -1,8 +1,18 @@
 package pe.edu.upc.apirev.servicesimplements;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import pe.edu.upc.apirev.entities.PublicationSave;
+import pe.edu.upc.apirev.repositories.IPublicationSaveRepository;
 import pe.edu.upc.apirev.servicesinterfaces.IPublicationSaveService;
 
+@Service
 public class PublicationSaveImplements implements IPublicationSaveService {
+
     @Autowired
     private IPublicationSaveRepository ipublicationsaveRepository;
 
@@ -12,8 +22,8 @@ public class PublicationSaveImplements implements IPublicationSaveService {
     }
 
     @Override
-    public void insert(PublicationSave publicationSave) {
-        ipublicationsaveRepository.save(publicationSave);
+    public PublicationSave insert(PublicationSave publicationSave) {
+        return ipublicationsaveRepository.save(publicationSave);
     }
 
     @Override
@@ -22,12 +32,13 @@ public class PublicationSaveImplements implements IPublicationSaveService {
     }
 
     @Override
-    public PublicationSave findById(int idPublicationSave) {
-        return ipublicationsaveRepository.findById(idPublicationSave).orElse(null);
+    public Optional<PublicationSave> listId(int idPublicationSave) {
+        return ipublicationsaveRepository.findById(idPublicationSave);
     }
 
-    @GetMapping("/listByUser/{idUser}")
-    public List<PublicationSave> listByUser(@PathVariable int idUser) {
-        return ipublicationsaveRepository.findByUser(idUser);
+    @Override
+    public PublicationSave update(PublicationSave p) {
+        return ipublicationsaveRepository.save(p);
     }
+
 }

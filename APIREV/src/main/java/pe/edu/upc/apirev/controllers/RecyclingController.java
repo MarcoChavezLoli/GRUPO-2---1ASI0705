@@ -34,33 +34,31 @@ public class RecyclingController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<?> registrar(@RequestBody RecyclingDTO dto){
-        ModelMapper m=new ModelMapper();
+    public ResponseEntity<?> registrar(@RequestBody RecyclingDTO dto) {
+        ModelMapper m = new ModelMapper();
         Optional<User> User = uS.listId(dto.getUserid());
         if (User.isPresent()) {
-            Recycling recycling =m.map(dto, Recycling.class);
-            Recycling re=rS.insert(recycling);
-            RecyclingDTO responseDTO=m.map(re,RecyclingDTO.class);
-            return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+            Recycling recycling = m.map(dto, Recycling.class);
+            Recycling re = rS.insert(recycling);
+            RecyclingDTO responseDTO = m.map(re, RecyclingDTO.class);
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Error al registrar reciclaje\nusuario no encontrado");
         }
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Recycling> reciclaje = rS.ListId(id);
 
         if (reciclaje.isPresent()) {
-            rS.Delete(id);
+            rS.delete(id);
             return ResponseEntity.ok("Reciclaje eliminado correctamente");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Reciclaje no encontrado");
         }
     }
-
 
 }

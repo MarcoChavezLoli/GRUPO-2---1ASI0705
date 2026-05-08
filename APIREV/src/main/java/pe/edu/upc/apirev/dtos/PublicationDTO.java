@@ -1,6 +1,5 @@
 package pe.edu.upc.apirev.dtos;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class PublicationDTO {
@@ -67,7 +66,5 @@ public class PublicationDTO {
     public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
     }
-
-
 
 }

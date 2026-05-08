@@ -29,7 +29,7 @@ public class ProductController {
         return ResponseEntity.ok(lista);
     }
 
-    @PostMapping
+    @PostMapping("/registrar")
     public ResponseEntity<ProductDTO> registrar(@RequestBody ProductDTO dto) {
         ModelMapper m = new ModelMapper();
         Product p = m.map(dto, Product.class);

@@ -2,12 +2,12 @@ package pe.edu.upc.apirev.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import pe.edu.upc.apirev.dtos.MultimediaDTO;
+import pe.edu.upc.apirev.entities.Multimedia;
 import pe.edu.upc.apirev.servicesinterfaces.IMultimediaService;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class MultimediaController {
     @Autowired
     private IMultimediaService mService;
 
-    @GetMapping("/listar/multimedia")
+    @GetMapping("/listar")
     public ResponseEntity<List<MultimediaDTO>> listar() {
         ModelMapper m = new ModelMapper();
         List<MultimediaDTO> lista = mService.list().stream()
@@ -27,4 +27,16 @@ public class MultimediaController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
+
+    @PostMapping("/registrar")
+    public ResponseEntity<MultimediaDTO> registrar (@RequestBody MultimediaDTO dto){
+        ModelMapper m = new ModelMapper();
+
+        Multimedia c = m.map(dto, Multimedia.class);
+        Multimedia cur= mService.insert(c);
+        MultimediaDTO responseDTO=m.map(cur,MultimediaDTO.class);
+
+        return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    }
+
 }

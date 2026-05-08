@@ -1,8 +1,8 @@
 package pe.edu.upc.apirev.entities;
 
 import jakarta.persistence.*;
-
 @Entity
+
 @Table(name = "Multimedia")
 public class Multimedia {
     @Id
@@ -15,10 +15,9 @@ public class Multimedia {
 
     @ManyToOne
     @JoinColumn(name = "idPublication")
-
     private Publication publication;
+    public Multimedia(){
 
-    public Multimedia() {
     }
 
     public Multimedia(int idMultimedia, String nameMultimedia, String descriptionMultimedia, Publication publication) {
