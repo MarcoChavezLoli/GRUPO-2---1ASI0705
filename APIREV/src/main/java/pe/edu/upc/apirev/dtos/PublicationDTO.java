@@ -1,14 +1,24 @@
 package pe.edu.upc.apirev.dtos;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 public class PublicationDTO {
+    private int idPublication;
     private String NamePublication;
     private String TypePublication;
     private LocalDate CreationDate;
     private boolean Status;
     private int idUser;
     private int idProduct;
+
+    public int getIdPublication() {
+        return idPublication;
+    }
+
+    public void setIdPublication(int idPublication) {
+        this.idPublication = idPublication;
+    }
 
     public String getNamePublication() {
         return NamePublication;
@@ -57,4 +67,7 @@ public class PublicationDTO {
     public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
     }
+
+
+
 }

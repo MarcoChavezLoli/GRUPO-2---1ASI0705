@@ -1,8 +1,11 @@
-package pe.edu.upc.apirevive.repositories;
+package pe.edu.upc.apirev.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pe.edu.upc.apirevive.entities.PublicationSave;
-import pe.edu.upc.apirevive.entities.Role;
+import org.springframework.stereotype.Repository;
+import pe.edu.upc.apirev.entities.PublicationSave;
+import java.util.List;
 
-public interface IPublicationSaveRepository extends JpaRepository<PublicationSave,Integer> {
+@Repository
+public interface IPublicationSaveRepository extends JpaRepository<PublicationSave, Integer> {
+
 }
