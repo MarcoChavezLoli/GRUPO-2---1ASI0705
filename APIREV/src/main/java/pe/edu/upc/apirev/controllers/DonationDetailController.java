@@ -69,9 +69,9 @@ public class DonationDetailController {
         dd.setDetailDescription(Dddto.getDescripciondetalle());
         dd.setTraceabilityStatus(Dddto.isEstadotrazabilidad());
         dd.setDateRegistration(Dddto.getFecharegistrada());
-        
+
         Dds.update(dd);
 
-        return ResponseEntity.ok("El Detalle de la Donacion fue actualizada correctamente");
+        return ResponseEntity.ok("El Detalle de la Donación fue actualizada correctamente");
     }
 }

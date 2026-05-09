@@ -31,7 +31,11 @@ public class CategoryController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<CategoryDTO> registrar(@RequestBody CategoryDTO dto){
+    public ResponseEntity<?> registrar(@RequestBody CategoryDTO dto){
+        if (dto.getDescriptionCategory() == null || dto.getNameCategory() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La descripcion y el nombre de la categoría es obligatorio.");
+        }
         ModelMapper m=new ModelMapper();
         Category r=m.map(dto, Category.class);
         Category cur= cS.insert(r);
