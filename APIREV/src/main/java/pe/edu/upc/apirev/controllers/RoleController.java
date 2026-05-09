@@ -28,10 +28,16 @@ public class RoleController {
     private IUserService uS;
 
     @GetMapping("/listar/roles")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<RoleDTO>> listar() {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
-        List<RoleDTO> lista = rS.list().stream()
+        List<Role> rolesExistentes = rS.list();
+
+        if (rolesExistentes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No existen roles registrados en el sistema.");
+        }
+        List<RoleDTO> lista = rolesExistentes.stream()
                 .map(y -> m.map(y, RoleDTO.class))
                 .collect(Collectors.toList());
 
@@ -39,7 +45,7 @@ public class RoleController {
     }
 
     @PostMapping("/registrar/roles")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody RoleGeneralDTO dto) {
 
         Optional<User> userOpt = uS.listId(dto.getIdUser());
@@ -52,7 +58,6 @@ public class RoleController {
                     .body("El nombre del rol no puede estar vacío");
         }
 
-
         Role role = new Role();
         role.setNameRole(dto.getNameRole());
         role.setUser(userOpt.get());
@@ -61,7 +66,7 @@ public class RoleController {
     }
 
     @PutMapping("/roles/actualiza")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody RoleGeneralDTO dto) {
         Optional<Role> existente = rS.listId(dto.getIdRole());
         if (existente.isEmpty()) {
@@ -75,11 +80,11 @@ public class RoleController {
         Role r = existente.get();
         r.setNameRole(dto.getNameRole());
         rS.update(r);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Rol Actualizado Correctamente");
+        return ResponseEntity.status(HttpStatus.OK).body("Rol Actualizado Correctamente");
     }
 
     @DeleteMapping("/eliminar/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Role> role = rS.listId(id);
 
@@ -94,7 +99,7 @@ public class RoleController {
 
 
     @GetMapping("/buscar/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<Role> role = rS.listId(id);
@@ -109,7 +114,7 @@ public class RoleController {
     }
 
     @GetMapping("/cantidad-usuarios-rol")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?>obtenerCantidadUsuarioRol(){
         List<Object[]> listaCantidad=rS.quantityRoleByUser();
         if(listaCantidad.isEmpty()){

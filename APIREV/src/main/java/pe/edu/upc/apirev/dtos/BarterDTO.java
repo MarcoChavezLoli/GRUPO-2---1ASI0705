@@ -22,7 +22,7 @@ public class BarterDTO {
     }
 
     public void setDescriptionBarter(String descriptionBarter) {
-        descriptionBarter = descriptionBarter;
+        this.descriptionBarter = descriptionBarter;
     }
 
     public boolean isStatusBarter() {
@@ -30,7 +30,7 @@ public class BarterDTO {
     }
 
     public void setStatusBarter(boolean statusBarter) {
-        statusBarter = statusBarter;
+        this.statusBarter = statusBarter;
     }
 
     public LocalDate getDateBarter() {
@@ -38,7 +38,7 @@ public class BarterDTO {
     }
 
     public void setDateBarter(LocalDate dateBarter) {
-        dateBarter = dateBarter;
+        this.dateBarter = dateBarter;
     }
 
     public int getIdUser() {

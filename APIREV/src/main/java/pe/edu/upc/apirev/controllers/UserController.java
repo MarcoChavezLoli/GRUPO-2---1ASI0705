@@ -29,7 +29,7 @@ public class UserController {
     private IRoleService rS;
 
     @GetMapping("/usuarios/listar")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<UserGeneralDTO>> listar() {
         List<UserGeneralDTO> lista = uS.list().stream()
                 .map(user -> {
@@ -88,7 +88,7 @@ public class UserController {
 
 
     @PutMapping("/usuarios/actualizar")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody UserDTO dto) {
         Optional<User> existente = uS.listId(dto.getIdUser());
         if (existente.isEmpty()) {
@@ -120,7 +120,7 @@ public class UserController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<User> user = uS.listId(id);
 
@@ -135,7 +135,7 @@ public class UserController {
     }
 
     @GetMapping("/buscar/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<User> user = uS.listId(id);
@@ -150,6 +150,7 @@ public class UserController {
     }
 
     @GetMapping("/lista-usuarios-trueque")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?>obtenerListaUsuarioSinTrueque(){
         List<Object[]> lista=uS.usersWithoutBarter();
         if(lista.isEmpty()){
