@@ -1,12 +1,14 @@
 package pe.edu.upc.apirev.servicesimplements;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pe.edu.upc.apirev.entities.Donation;
 import pe.edu.upc.apirev.repositories.IDonationRepository;
 import pe.edu.upc.apirev.servicesinterfaces.IDonationService;
 
 import java.util.List;
 import java.util.Optional;
+@Service
 
 public class DonationServiceImplement implements IDonationService {
 
