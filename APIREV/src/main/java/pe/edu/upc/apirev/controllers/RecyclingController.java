@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.*;
 import pe.edu.upc.apirev.entities.Recycling;
@@ -25,6 +26,7 @@ public class RecyclingController {
     private IUserService uS;
 
     @GetMapping("/Reciclajes")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RecyclingDTO>> listar() {
         ModelMapper m = new ModelMapper();
         List<RecyclingDTO> lista = rS.list().stream()
@@ -35,6 +37,7 @@ public class RecyclingController {
     }
 
     @PostMapping("/registrar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody RecyclingDTO dto) {
         ModelMapper m = new ModelMapper();
         Optional<User> User = uS.listId(dto.getUserid());
@@ -50,6 +53,7 @@ public class RecyclingController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Recycling> reciclaje = rS.ListId(id);
 
@@ -63,6 +67,7 @@ public class RecyclingController {
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody RecyclingDTO dto) {
         Optional<Recycling> existente = rS.ListId(dto.getRecyclingId());
         if (existente.isEmpty()) {
@@ -81,6 +86,7 @@ public class RecyclingController {
     }
 
     @GetMapping("/buscar/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<Recycling> recycling = rS.ListId(id);
@@ -96,6 +102,7 @@ public class RecyclingController {
 
 
     @GetMapping("/cantidad-Reciclajes-Categoria")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?>obtenerCantidadReciclajesUsuario(){
         List<Object[]> listaCantidad=rS.quantityRecyclingNative();
         if(listaCantidad.isEmpty()){
