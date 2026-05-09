@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 
 public class LocationGeneralDTO {
     private int idLocation;
-    private String AddressLocation;
-    private BigDecimal LatitudeLocation;
-    private BigDecimal LongitudeLocation;
-    private String DistrictLocation;
+    private String addressLocation;
+    private BigDecimal latitudeLocation;
+    private BigDecimal longitudeLocation;
+    private String districtLocation;
 
     public int getIdLocation() {
         return idLocation;
@@ -18,35 +18,35 @@ public class LocationGeneralDTO {
         this.idLocation = idLocation;
     }
 
-    public String getAddressLocation() {
-        return AddressLocation;
-    }
-
-    public void setAddressLocation(String addressLocation) {
-        AddressLocation = addressLocation;
-    }
-
-    public BigDecimal getLatitudeLocation() {
-        return LatitudeLocation;
-    }
-
-    public void setLatitudeLocation(BigDecimal latitudeLocation) {
-        LatitudeLocation = latitudeLocation;
-    }
-
     public BigDecimal getLongitudeLocation() {
-        return LongitudeLocation;
+        return longitudeLocation;
     }
 
     public void setLongitudeLocation(BigDecimal longitudeLocation) {
-        LongitudeLocation = longitudeLocation;
+        this.longitudeLocation = longitudeLocation;
+    }
+
+    public String getAddressLocation() {
+        return addressLocation;
+    }
+
+    public void setAddressLocation(String addressLocation) {
+        this.addressLocation = addressLocation;
+    }
+
+    public BigDecimal getLatitudeLocation() {
+        return latitudeLocation;
+    }
+
+    public void setLatitudeLocation(BigDecimal latitudeLocation) {
+        this.latitudeLocation = latitudeLocation;
     }
 
     public String getDistrictLocation() {
-        return DistrictLocation;
+        return districtLocation;
     }
 
     public void setDistrictLocation(String districtLocation) {
-        DistrictLocation = districtLocation;
+        this.districtLocation = districtLocation;
     }
 }
