@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.QueryNativeUserDTO;
@@ -28,6 +29,7 @@ public class UserController {
     private IRoleService rS;
 
     @GetMapping("/usuarios/listar")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserGeneralDTO>> listar() {
         List<UserGeneralDTO> lista = uS.list().stream()
                 .map(user -> {
@@ -38,6 +40,7 @@ public class UserController {
                     dto.setUserIdentityDocument(user.getUserIdentityDocument());
                     dto.setUserEmail(user.getUserEmail());
                     dto.setUserRegistrationDate(user.getUserRegistrationDate());
+
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -55,8 +58,9 @@ public class UserController {
             return ResponseEntity.badRequest().body("Campos obligatorios vacíos.");
         }
 
-        if (dto.getUserIdentityDocument().trim().length() != 8) {
-            return ResponseEntity.badRequest().body("El DNI debe tener 8 caracteres.");
+        if (!dto.getUserIdentityDocument().matches("\\d{8}")) {
+            return ResponseEntity.badRequest()
+                    .body(" DNI invalido.");
         }
 
 
@@ -84,30 +88,45 @@ public class UserController {
 
 
     @PutMapping("/usuarios/actualizar")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody UserDTO dto) {
         Optional<User> existente = uS.listId(dto.getIdUser());
         if (existente.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Usuario no encontrado");
         }
+        //VALIDACION DE CAMPOS
+        if (dto.getUserName() == null || dto.getUserName().trim().isEmpty() ||
+                dto.getUserLastName() == null || dto.getUserLastName().trim().isEmpty() ||
+                dto.getUserIdentityDocument() == null || dto.getUserIdentityDocument().trim().isEmpty() ||
+                dto.getUserEmail() == null || dto.getUserEmail().trim().isEmpty()) {
+
+            return ResponseEntity.badRequest()
+                    .body("Campos obligatorios vacíos.");
+        }
+        ///VALIDACION DNI
+        if (!dto.getUserIdentityDocument().matches("\\d{8}")) {
+            return ResponseEntity.badRequest()
+                    .body(" DNI invalido.");
+        }
         User u = existente.get();
         u.setUserEmail(dto.getUserEmail());
         u.setUserName(dto.getUserName());
         u.setUserIdentityDocument(dto.getUserIdentityDocument());
-        u.setUserPassword(dto.getUserPassword());
-        u.setUserRegistrationDate(dto.getUserRegistrationDate());
         u.setUserLastName(dto.getUserLastName());
 
         uS.update(u);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario Actualizado Correctamente");
+        return ResponseEntity.status(HttpStatus.OK).body("Usuario Actualizado Correctamente");
     }
 
     @DeleteMapping("/eliminar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<User> user = uS.listId(id);
 
         if (user.isPresent()) {
-            uS.delete(id);
+            rS.deleteByUserId(id); //  elimina roles primero
+            uS.delete(id);          //  luego elimina usuario
             return ResponseEntity.ok("Usuario eliminado correctamente");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -116,6 +135,7 @@ public class UserController {
     }
 
     @GetMapping("/buscar/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<User> user = uS.listId(id);
