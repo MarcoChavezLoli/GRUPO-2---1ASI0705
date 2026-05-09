@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class RecyclingDetailDTO {
 
     private int RecyclingDetailsId;
-    private String DescripcionDetail;
+    private String DescriptionDetail;
     private LocalDate RegistrationDate;
     private String TraceabilityStatus;
     private int CollectionPointId;
@@ -19,12 +19,12 @@ public class RecyclingDetailDTO {
         RecyclingDetailsId = recyclingDetailsId;
     }
 
-    public String getDescripcionDetail() {
-        return DescripcionDetail;
+    public String getDescriptionDetail() {
+        return DescriptionDetail;
     }
 
-    public void setDescripcionDetail(String descripcionDetail) {
-        DescripcionDetail = descripcionDetail;
+    public void setDescriptionDetail(String descriptionDetail) {
+        DescriptionDetail = descriptionDetail;
     }
 
     public LocalDate getRegistrationDate() {

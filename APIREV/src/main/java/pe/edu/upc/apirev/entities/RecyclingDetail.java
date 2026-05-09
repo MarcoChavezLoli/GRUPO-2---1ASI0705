@@ -12,8 +12,8 @@ public class RecyclingDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int RecyclingDetailsId;
 
-    @Column (name = "DescripcionDetail",length = 200, nullable = false)
-    private String DescripcionDetail;
+    @Column (name = "DescriptionDetail",length = 200, nullable = false)
+    private String DescriptionDetail;
 
     @Column (name = "RegistrationDate",length = 200, nullable = false)
     private LocalDate RegistrationDate;
@@ -28,9 +28,9 @@ public class RecyclingDetail {
     public RecyclingDetail() {
     }
 
-    public RecyclingDetail(int recyclingDetailsId, String descripcionDetail, LocalDate registrationDate, String traceabilityStatus, CollectionPoint collectionPoint) {
+    public RecyclingDetail(int recyclingDetailsId, String descriptionDetail, LocalDate registrationDate, String traceabilityStatus, CollectionPoint collectionPoint) {
         RecyclingDetailsId = recyclingDetailsId;
-        DescripcionDetail = descripcionDetail;
+        DescriptionDetail = descriptionDetail;
         RegistrationDate = registrationDate;
         TraceabilityStatus = traceabilityStatus;
         this.collectionPoint = collectionPoint;
@@ -44,12 +44,12 @@ public class RecyclingDetail {
         RecyclingDetailsId = recyclingDetailsId;
     }
 
-    public String getDescripcionDetail() {
-        return DescripcionDetail;
+    public String getDescriptionDetail() {
+        return DescriptionDetail;
     }
 
-    public void setDescripcionDetail(String descripcionDetail) {
-        DescripcionDetail = descripcionDetail;
+    public void setDescriptionDetail(String descriptionDetail) {
+        DescriptionDetail = descriptionDetail;
     }
 
     public LocalDate getRegistrationDate() {

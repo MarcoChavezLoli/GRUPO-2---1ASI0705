@@ -71,7 +71,7 @@ public class RecyclingDetailController {
         }
 
         RecyclingDetail r = existente.get();
-        r.setDescripcionDetail(dto.getDescripcionDetail());
+        r.setDescriptionDetail(dto.getDescriptionDetail());
         r.setRegistrationDate(dto.getRegistrationDate());
         r.setTraceabilityStatus(dto.getTraceabilityStatus());
 
