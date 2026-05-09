@@ -16,17 +16,17 @@ public class Category {
     private String DescriptionCategory;
 
     @Column(name = "StateCategory", nullable = false)
-    private Boolean StateCategory;
+    private boolean StateCategory;
 
     public Category() {
 
     }
 
-    public Category(int IdCategory, String nameCategory, String descriptionCategory, Boolean StateCategory) {
-        this.IdCategory = IdCategory;
+    public Category(int idCategory, String nameCategory, String descriptionCategory, boolean stateCategory) {
+        IdCategory = idCategory;
         NameCategory = nameCategory;
         DescriptionCategory = descriptionCategory;
-        this.StateCategory = StateCategory;
+        StateCategory = stateCategory;
     }
 
     public int getIdCategory() {
@@ -35,14 +35,6 @@ public class Category {
 
     public void setIdCategory(int idCategory) {
         IdCategory = idCategory;
-    }
-
-    public Boolean getStateCategory() {
-        return StateCategory;
-    }
-
-    public void setStateCategory(Boolean stateCategory) {
-        StateCategory = stateCategory;
     }
 
     public String getNameCategory() {
@@ -59,5 +51,13 @@ public class Category {
 
     public void setDescriptionCategory(String descriptionCategory) {
         DescriptionCategory = descriptionCategory;
+    }
+
+    public boolean isStateCategory() {
+        return StateCategory;
+    }
+
+    public void setStateCategory(boolean stateCategory) {
+        StateCategory = stateCategory;
     }
 }

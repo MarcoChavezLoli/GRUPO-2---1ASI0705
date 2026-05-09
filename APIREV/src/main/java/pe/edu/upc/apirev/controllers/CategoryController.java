@@ -64,7 +64,7 @@ public class CategoryController {
         Category c = existente.get();
         c.setDescriptionCategory(dto.getDescriptionCategory());
         c.setNameCategory(dto.getNameCategory());
-        c.setStateCategory(dto.isStatusCategory());
+        c.setStateCategory(dto.isStateCategory());
 
         cS.Update(c);
 

@@ -7,11 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.BarterDTO;
+import pe.edu.upc.apirev.dtos.BarterWithUserDTO;
+import pe.edu.upc.apirev.dtos.QueryNativeUserDTO;
 import pe.edu.upc.apirev.entities.Barter;
 import pe.edu.upc.apirev.entities.User;
 import pe.edu.upc.apirev.servicesinterfaces.IBarterService;
 import pe.edu.upc.apirev.servicesinterfaces.IUserService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -107,6 +111,24 @@ public class BarterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("trueque no encontrado");
         }
+    }
+    @GetMapping("/lista-usuarios-cantidad-trueque")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?>obtenerListaUsuarioCantidadTrueque() {
+        List<Object[]> lista=bS.findAllBartersWithUsers();
+        if(lista.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay lista de cantidad de trueques por usuario");
+        }
+        List<BarterWithUserDTO> respuesta=new ArrayList<>();
+        for(Object[] fila:lista){
+            BarterWithUserDTO dto=new BarterWithUserDTO();
+            dto.setFull_Name((String) fila[0]);
+            dto.setMonth((String) fila[1]);
+            dto.setQuantity(((Number) fila[2]).intValue());
+            respuesta.add(dto);
+        }
+        return  ResponseEntity.ok(respuesta);
     }
 
 }

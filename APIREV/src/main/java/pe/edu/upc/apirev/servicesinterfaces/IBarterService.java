@@ -11,4 +11,5 @@ public interface IBarterService {
     public void update (Barter b);
     public void delete (int id);
     public Optional<Barter> listId(int id);
+    public List<Object[]> findAllBartersWithUsers();
 }

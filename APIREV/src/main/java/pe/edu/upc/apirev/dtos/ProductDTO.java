@@ -1,43 +1,43 @@
 package pe.edu.upc.apirev.dtos;
 
 public class ProductDTO {
-    private int IdProduct;
-    private String NameProduct;
-    private String DescriptionProduct;
-    private String ConservationStatus;
+    private int iddProduct;
+    private String nameProduct;
+    private String descriptionProduct;
+    private String conservationStatus;
     private int idBarter;
-    private int IdCategory;
+    private int idCategory;
 
-    public int getIdProduct() {
-        return IdProduct;
+    public int getIddProduct() {
+        return iddProduct;
     }
 
-    public void setIdProduct(int idProduct) {
-        IdProduct = idProduct;
+    public void setIddProduct(int iddProduct) {
+        this.iddProduct = iddProduct;
     }
 
     public String getNameProduct() {
-        return NameProduct;
+        return nameProduct;
     }
 
     public void setNameProduct(String nameProduct) {
-        NameProduct = nameProduct;
+        this.nameProduct = nameProduct;
     }
 
     public String getDescriptionProduct() {
-        return DescriptionProduct;
+        return descriptionProduct;
     }
 
     public void setDescriptionProduct(String descriptionProduct) {
-        DescriptionProduct = descriptionProduct;
+        this.descriptionProduct = descriptionProduct;
     }
 
     public String getConservationStatus() {
-        return ConservationStatus;
+        return conservationStatus;
     }
 
     public void setConservationStatus(String conservationStatus) {
-        ConservationStatus = conservationStatus;
+        this.conservationStatus = conservationStatus;
     }
 
     public int getIdBarter() {
@@ -49,10 +49,10 @@ public class ProductDTO {
     }
 
     public int getIdCategory() {
-        return IdCategory;
+        return idCategory;
     }
 
     public void setIdCategory(int idCategory) {
-        IdCategory = idCategory;
+        this.idCategory = idCategory;
     }
 }
