@@ -51,7 +51,7 @@ public class PublicationSaveController {
             return ResponseEntity.ok(dto);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Proyecto no encontrado");
+                    .body("Publicacion no encontrado");
         }
     }
 

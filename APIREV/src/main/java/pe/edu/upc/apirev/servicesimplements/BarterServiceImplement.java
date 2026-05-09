@@ -40,4 +40,11 @@ public class BarterServiceImplement implements IBarterService {
     public Optional<Barter> listId(int id) {
         return bR.findById(id) ;
     }
+
+    @Override
+    public List<Object[]> findAllBartersWithUsers() {
+        return bR.findAllWithUsers();
+    }
+
+
 }
