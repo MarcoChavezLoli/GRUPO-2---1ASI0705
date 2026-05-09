@@ -1,8 +1,8 @@
 FROM maven:3.9.6-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY ./APIREV/pom.xml .
+WORKDIR /APIREV
+COPY pom.xml .
 RUN mvn dependency:go-offline -q
-COPY src ./APIREV/src
+COPY src ./src
 RUN mvn clean package -DskipTests -q
 
 FROM eclipse-temurin:17-jre
