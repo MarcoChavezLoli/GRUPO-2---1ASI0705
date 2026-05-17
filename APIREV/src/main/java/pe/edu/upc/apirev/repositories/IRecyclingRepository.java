@@ -11,11 +11,10 @@ import java.util.List;
 public interface IRecyclingRepository extends JpaRepository<Recycling,Integer> {
 
 
-    @Query(value = "SELECT u.id_user, u.user_name, COUNT(r.RecyclingId) " +
-            " FROM user u " +
-            " LEFT JOIN recycling r" +
-            " ON u.id_user = r.u.id_user " +
-            " GROUP BY u.id_user, u.user_name",
+    @Query(value = "SELECT u.id_user, u.user_name, COUNT(r.recycling_id)\n" +
+            "FROM users u \n" +
+            "LEFT JOIN recycling r ON u.id_user = r.id_user\n" +
+            "GROUP BY u.id_user, u.user_name",
             nativeQuery = true)
     List<Object[]> quantityRecyclingByUser();
 }

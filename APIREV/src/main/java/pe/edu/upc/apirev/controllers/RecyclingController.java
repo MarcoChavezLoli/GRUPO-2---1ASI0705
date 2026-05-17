@@ -23,24 +23,30 @@ public class RecyclingController {
 
     @Autowired
     private IRecyclingService rS;
+
+    @Autowired
     private IUserService uS;
 
     @GetMapping("/Reciclajes")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<RecyclingDTO>> listar() {
+    public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
         List<RecyclingDTO> lista = rS.list().stream()
                 .map(y -> m.map(y, RecyclingDTO.class))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(lista);
+        if (lista.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La lista está vacía");
+        }else {
+            return ResponseEntity.ok(lista);
+        }
     }
 
     @PostMapping("/registrar")
     @PreAuthorize("hasAnyAuthority('RECOLECTOR','ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody RecyclingDTO dto) {
         ModelMapper m = new ModelMapper();
-        Optional<User> User = uS.listId(dto.getUserid());
+        Optional<User> User = uS.listId(dto.getIdUser());
         if (User.isPresent()) {
             Recycling recycling = m.map(dto, Recycling.class);
             Recycling re = rS.insert(recycling);
@@ -101,7 +107,7 @@ public class RecyclingController {
     }
 
 
-    @GetMapping("/cantidad-Reciclajes-Categoria")
+    @GetMapping("/cantidad-Reciclajes-Usuario")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?>obtenerCantidadReciclajesUsuario(){
         List<Object[]> listaCantidad=rS.quantityRecyclingNative();
