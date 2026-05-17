@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.ItemDTO;
 import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
@@ -43,6 +44,7 @@ public class ItemController {
 
 
     @PostMapping("/registrar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody ItemDTO dto){
         ModelMapper m=new ModelMapper();
         Optional<Category> category = cS.ListId(dto.getIdCategory());
@@ -58,6 +60,7 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Item> item = iS.ListId(id);
 
@@ -71,6 +74,7 @@ public class ItemController {
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody ItemGeneralDTO dto) {
         Optional<Item> existente = iS.ListId(dto.getItemId());
         if (existente.isEmpty()) {
@@ -91,6 +95,7 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<Item> project = iS.ListId(id);
@@ -105,6 +110,7 @@ public class ItemController {
     }
 
     @GetMapping("/cantidad-Articulo-Categoria")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?>obtenerCantidadArticuloCategoria(){
         List<Object[]> listaCantidad=iS.quantityItemNative();
         if(listaCantidad.isEmpty()){
