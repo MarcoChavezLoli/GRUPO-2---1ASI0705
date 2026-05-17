@@ -1,51 +1,50 @@
 package pe.edu.upc.apirev.dtos;
 
-import pe.edu.upc.apirev.entities.Category;
 
 public class ItemGeneralDTO {
-    private int ItemId;
-    private String ItemName;
-    private String ItemDescription;
-    private String ItemCondition;
-    private Category category;
+    private int itemId;
+    private String itemName;
+    private String itemDescription;
+    private String itemCondition;
+    private int idCategory;
 
     public int getItemId() {
-        return ItemId;
+        return itemId;
     }
 
     public void setItemId(int itemId) {
-        ItemId = itemId;
+        this.itemId = itemId;
     }
 
     public String getItemName() {
-        return ItemName;
+        return itemName;
     }
 
     public void setItemName(String itemName) {
-        ItemName = itemName;
+        this.itemName = itemName;
     }
 
     public String getItemDescription() {
-        return ItemDescription;
+        return itemDescription;
     }
 
     public void setItemDescription(String itemDescription) {
-        ItemDescription = itemDescription;
+        this.itemDescription = itemDescription;
     }
 
     public String getItemCondition() {
-        return ItemCondition;
+        return itemCondition;
     }
 
     public void setItemCondition(String itemCondition) {
-        ItemCondition = itemCondition;
+        this.itemCondition = itemCondition;
     }
 
-    public Category getCategory() {
-        return category;
+    public int getIdCategory() {
+        return idCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
     }
 }

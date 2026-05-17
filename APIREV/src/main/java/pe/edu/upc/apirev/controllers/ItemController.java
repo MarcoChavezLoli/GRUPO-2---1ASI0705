@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.apirev.dtos.ItemDTO;
 import pe.edu.upc.apirev.dtos.ItemGeneralDTO;
 import pe.edu.upc.apirev.dtos.QueryNativeDTO;
 import pe.edu.upc.apirev.entities.Category;
@@ -32,7 +31,7 @@ public class ItemController {
     @GetMapping("/listar/Articulo")
     public ResponseEntity<?> Listar(){
         ModelMapper m = new ModelMapper();
-        List<ItemDTO> ListaArticulos = iS.listar().stream().map(y->m.map(y, ItemDTO.class))
+        List<ItemGeneralDTO> ListaArticulos = iS.listar().stream().map(y->m.map(y, ItemGeneralDTO.class))
                 .collect(Collectors.toList());
 
         if (ListaArticulos.isEmpty()){
@@ -45,13 +44,13 @@ public class ItemController {
 
     @PostMapping("/registrar")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> registrar(@RequestBody ItemDTO dto){
+    public ResponseEntity<?> registrar(@RequestBody ItemGeneralDTO dto){
         ModelMapper m=new ModelMapper();
         Optional<Category> category = cS.ListId(dto.getIdCategory());
         if (category.isPresent()) {
             Item item=m.map(dto, Item.class);
             Item cur=iS.insert(item);
-            ItemDTO responseDTO=m.map(cur,ItemDTO.class);
+            ItemGeneralDTO responseDTO=m.map(cur,ItemGeneralDTO.class);
             return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
