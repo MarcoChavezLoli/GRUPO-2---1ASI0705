@@ -22,6 +22,7 @@ public class CategoryController {
 
 
     @GetMapping("/listar/categorias")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
         List<CategoryDTO> lista = cS.list().stream()

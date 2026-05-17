@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.MaterialDTO;
 import pe.edu.upc.apirev.dtos.QueryNativeMaterialTypeDTO;
@@ -23,6 +24,7 @@ public class MaterialController {
     private IMaterialService mS;
 
     @GetMapping("/Material")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<MaterialDTO>> listar() {
         ModelMapper m = new ModelMapper();
         List<MaterialDTO> lista = mS.list().stream()
@@ -33,6 +35,7 @@ public class MaterialController {
     }
 
     @PostMapping("/registrar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody MaterialDTO dto){
         ModelMapper m=new ModelMapper();
             Material material=m.map(dto, Material.class);
@@ -42,6 +45,7 @@ public class MaterialController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Material> material = mS.ListId(id);
 
@@ -55,6 +59,7 @@ public class MaterialController {
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody MaterialDTO dto) {
         Optional<Material> existente = mS.ListId(dto.getIdMaterial());
         if (existente.isEmpty()) {
@@ -73,7 +78,8 @@ public class MaterialController {
 
 
     }
-@GetMapping("/buscartipo")
+    @GetMapping("/buscartipo")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> searchByTypeNative(@RequestParam String type) {
         List<Object[]> rawList = mS.searchByTypeNative(type);
         

@@ -2,9 +2,9 @@ package pe.edu.upc.apirev.dtos;
 
 public class MaterialDTO {
     private int idMaterial;
-    private String MaterialName;
-    private String MaterialDescription;
-    private String MaterialType;
+    private String materialName;
+    private String materialDescription;
+    private String materialType;
 
     public int getIdMaterial() {
         return idMaterial;
@@ -15,26 +15,26 @@ public class MaterialDTO {
     }
 
     public String getMaterialName() {
-        return MaterialName;
+        return materialName;
     }
 
     public void setMaterialName(String materialName) {
-        MaterialName = materialName;
+        this.materialName = materialName;
     }
 
     public String getMaterialDescription() {
-        return MaterialDescription;
+        return materialDescription;
     }
 
     public void setMaterialDescription(String materialDescription) {
-        MaterialDescription = materialDescription;
+        this.materialDescription = materialDescription;
     }
 
     public String getMaterialType() {
-        return MaterialType;
+        return materialType;
     }
 
     public void setMaterialType(String materialType) {
-        MaterialType = materialType;
+        this.materialType = materialType;
     }
 }
