@@ -2,33 +2,42 @@ package pe.edu.upc.apirev.dtos;
 
 public class ItemDTO {
 
-    private String ItemName;
-    private String ItemDescription;
-    private String ItemCondition;
+    private int itemId;
+    private String itemName;
+    private String itemDescription;
+    private String itemCondition;
     private int idCategory;
 
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
     public String getItemName() {
-        return ItemName;
+        return itemName;
     }
 
     public void setItemName(String itemName) {
-        ItemName = itemName;
+        this.itemName = itemName;
     }
 
     public String getItemDescription() {
-        return ItemDescription;
+        return itemDescription;
     }
 
     public void setItemDescription(String itemDescription) {
-        ItemDescription = itemDescription;
+        this.itemDescription = itemDescription;
     }
 
     public String getItemCondition() {
-        return ItemCondition;
+        return itemCondition;
     }
 
     public void setItemCondition(String itemCondition) {
-        ItemCondition = itemCondition;
+        this.itemCondition = itemCondition;
     }
 
     public int getIdCategory() {

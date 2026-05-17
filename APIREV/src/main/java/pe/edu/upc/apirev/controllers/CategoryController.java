@@ -21,15 +21,17 @@ public class CategoryController {
     private ICategoryService cS;
 
 
-    @GetMapping("/categorias")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<CategoryDTO>> listar() {
+    @GetMapping("/listar/categorias")
+    public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
         List<CategoryDTO> lista = cS.list().stream()
                 .map(y -> m.map(y, CategoryDTO.class))
                 .collect(Collectors.toList());
-
-        return ResponseEntity.ok(lista);
+        if (lista.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La lista está vacía");
+        }else {
+            return ResponseEntity.ok(lista);
+        }
     }
 
     @PostMapping("/registrar")
