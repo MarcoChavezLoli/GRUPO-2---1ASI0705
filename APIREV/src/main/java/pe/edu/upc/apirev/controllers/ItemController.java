@@ -29,6 +29,7 @@ public class ItemController {
     private ICategoryService cS;
 
     @GetMapping("/listar/Articulo")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> Listar(){
         ModelMapper m = new ModelMapper();
         List<ItemGeneralDTO> ListaArticulos = iS.listar().stream().map(y->m.map(y, ItemGeneralDTO.class))
