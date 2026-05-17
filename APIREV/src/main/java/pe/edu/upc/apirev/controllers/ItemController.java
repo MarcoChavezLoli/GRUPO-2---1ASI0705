@@ -24,9 +24,11 @@ public class ItemController {
 
     @Autowired
     private IItemService iS;
+
+    @Autowired
     private ICategoryService cS;
 
-    @GetMapping
+    @GetMapping("/listar/Articulo")
     public ResponseEntity<?> Listar(){
         ModelMapper m = new ModelMapper();
         List<ItemDTO> ListaArticulos = iS.listar().stream().map(y->m.map(y, ItemDTO.class))
