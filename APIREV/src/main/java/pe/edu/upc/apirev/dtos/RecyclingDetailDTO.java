@@ -5,49 +5,49 @@ import java.time.LocalDate;
 
 public class RecyclingDetailDTO {
 
-    private int RecyclingDetailsId;
-    private String DescriptionDetail;
-    private LocalDate RegistrationDate;
-    private String TraceabilityStatus;
-    private int CollectionPointId;
+    private int recyclingDetailsId;
+    private String descriptionDetail;
+    private LocalDate registrationDate;
+    private String traceabilityStatus;
+    private int collectionPointId;
 
     public int getRecyclingDetailsId() {
-        return RecyclingDetailsId;
+        return recyclingDetailsId;
     }
 
     public void setRecyclingDetailsId(int recyclingDetailsId) {
-        RecyclingDetailsId = recyclingDetailsId;
+        this.recyclingDetailsId = recyclingDetailsId;
     }
 
     public String getDescriptionDetail() {
-        return DescriptionDetail;
+        return descriptionDetail;
     }
 
     public void setDescriptionDetail(String descriptionDetail) {
-        DescriptionDetail = descriptionDetail;
+        this.descriptionDetail = descriptionDetail;
     }
 
     public LocalDate getRegistrationDate() {
-        return RegistrationDate;
+        return registrationDate;
     }
 
     public void setRegistrationDate(LocalDate registrationDate) {
-        RegistrationDate = registrationDate;
+        this.registrationDate = registrationDate;
     }
 
     public String getTraceabilityStatus() {
-        return TraceabilityStatus;
+        return traceabilityStatus;
     }
 
     public void setTraceabilityStatus(String traceabilityStatus) {
-        TraceabilityStatus = traceabilityStatus;
+        this.traceabilityStatus = traceabilityStatus;
     }
 
     public int getCollectionPointId() {
-        return CollectionPointId;
+        return collectionPointId;
     }
 
     public void setCollectionPointId(int collectionPointId) {
-        CollectionPointId = collectionPointId;
+        this.collectionPointId = collectionPointId;
     }
 }

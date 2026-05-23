@@ -23,6 +23,8 @@ public class RecyclingDetailController {
 
     @Autowired
     private IRecyclingDetailService rdS;
+
+    @Autowired
     private ICollectionPointService cpS;
 
     @GetMapping("/DetallesRecilajes")

@@ -15,7 +15,7 @@ public class RecyclingDetail {
     @Column (name = "DescriptionDetail",length = 200, nullable = false)
     private String DescriptionDetail;
 
-    @Column (name = "RegistrationDate",length = 200, nullable = false)
+    @Column (name = "RegistrationDate", nullable = false)
     private LocalDate RegistrationDate;
 
     @Column (name = "TraceabilityStatus",length = 200, nullable = false)

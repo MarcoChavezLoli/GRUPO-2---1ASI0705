@@ -60,7 +60,7 @@ public class CollectionPointController {
             return ResponseEntity.ok("Punto de acopio eliminado correctamente");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Punto de acopio");
+                    .body("Punto de acopio no encontrado");
         }
     }
 
