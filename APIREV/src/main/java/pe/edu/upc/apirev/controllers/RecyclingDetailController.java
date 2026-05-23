@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.RecyclingDetailDTO;
 import pe.edu.upc.apirev.entities.CollectionPoint;
@@ -28,6 +29,7 @@ public class RecyclingDetailController {
     private ICollectionPointService cpS;
 
     @GetMapping("/DetallesRecilajes")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RecyclingDetailDTO>> listar() {
         ModelMapper m = new ModelMapper();
         List<RecyclingDetailDTO> lista = rdS.list().stream()
@@ -38,6 +40,7 @@ public class RecyclingDetailController {
     }
 
     @PostMapping("/registrar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody RecyclingDetailDTO dto){
         ModelMapper m=new ModelMapper();
         Optional<CollectionPoint> CollectionPoint = cpS.listId(dto.getCollectionPointId());
@@ -52,6 +55,7 @@ public class RecyclingDetailController {
         }
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<RecyclingDetail> reciclajedetalle = rdS.ListId(id);
 
@@ -65,6 +69,7 @@ public class RecyclingDetailController {
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody RecyclingDetailDTO dto) {
         Optional<RecyclingDetail> existente = rdS.ListId(dto.getRecyclingDetailsId());
         if (existente.isEmpty()) {
@@ -85,6 +90,7 @@ public class RecyclingDetailController {
     }
 
     @GetMapping("/buscar/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<RecyclingDetail> recyclingDetail = rdS.ListId(id);
