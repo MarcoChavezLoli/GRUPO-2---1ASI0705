@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.CollectionPointDTO;
 import pe.edu.upc.apirev.dtos.QueryNativeCollectionPointDTO;
@@ -23,6 +24,7 @@ public class CollectionPointController {
     private ICollectionPointService cpS;
 
     @PostMapping("/registrar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody CollectionPointDTO dto){
         ModelMapper m=new ModelMapper();
             CollectionPoint collectionPoint =m.map(dto, CollectionPoint.class);
@@ -31,7 +33,8 @@ public class CollectionPointController {
             return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
-    @GetMapping
+    @GetMapping("/listar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> Listar(){
         ModelMapper m = new ModelMapper();
         List<CollectionPointDTO> ListaPuntoAcopio = cpS.list()
@@ -47,6 +50,7 @@ public class CollectionPointController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
 
         Optional<CollectionPoint> collectionPoint = cpS.listId(id);
@@ -63,6 +67,7 @@ public class CollectionPointController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<CollectionPoint> collectionPoint = cpS.listId(id);
@@ -77,6 +82,7 @@ public class CollectionPointController {
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody CollectionPointDTO dto) {
         Optional<CollectionPoint> existente = cpS.listId(dto.getIdCollectionPoint());
         if (existente.isEmpty()) {
@@ -98,6 +104,7 @@ public class CollectionPointController {
     }
 
 @GetMapping("/conteo-por-direccion")
+@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> countPointsByAddress() {
         List<Object[]> rawList = cpS.countPointsByAddressNative();
         
