@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.DonationDetailDTO;
 import pe.edu.upc.apirev.entities.DonationDetail;
@@ -20,6 +21,7 @@ public class DonationDetailController {
     private IDonationDetailService Dds;
 
     @PostMapping("/Registrar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<DonationDetailDTO> Registrar(@RequestBody DonationDetailDTO dto){
         ModelMapper m =new ModelMapper();
         DonationDetail Dd=m.map(dto,DonationDetail.class);
@@ -29,6 +31,7 @@ public class DonationDetailController {
     }
 
     @GetMapping("/listar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<DonationDetailDTO>>listar(){
         ModelMapper m = new ModelMapper();
         List<DonationDetailDTO>listardonaciones = Dds.list()
@@ -38,6 +41,7 @@ public class DonationDetailController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<DonationDetail> task = Dds.listid(id);
 
@@ -52,6 +56,7 @@ public class DonationDetailController {
 
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody DonationDetailDTO Dddto) {
 
         Optional<DonationDetail> existente = Dds.listid(Dddto.getIdDonationDetail());
