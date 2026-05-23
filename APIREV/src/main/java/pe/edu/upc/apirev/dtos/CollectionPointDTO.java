@@ -2,10 +2,10 @@ package pe.edu.upc.apirev.dtos;
 
 public class CollectionPointDTO {
     private int idCollectionPoint;
-    private String CollectionPointName;
-    private String CollectionPointAddress;
-    private double CollectionPointLatitude;
-    private double CollectionPointLongitude;
+    private String collectionPointName;
+    private String collectionPointAddress;
+    private double collectionPointLatitude;
+    private double collectionPointLongitude;
 
     public int getIdCollectionPoint() {
         return idCollectionPoint;
@@ -16,34 +16,34 @@ public class CollectionPointDTO {
     }
 
     public String getCollectionPointName() {
-        return CollectionPointName;
+        return collectionPointName;
     }
 
     public void setCollectionPointName(String collectionPointName) {
-        CollectionPointName = collectionPointName;
+        this.collectionPointName = collectionPointName;
     }
 
     public String getCollectionPointAddress() {
-        return CollectionPointAddress;
+        return collectionPointAddress;
     }
 
     public void setCollectionPointAddress(String collectionPointAddress) {
-        CollectionPointAddress = collectionPointAddress;
+        this.collectionPointAddress = collectionPointAddress;
     }
 
     public double getCollectionPointLatitude() {
-        return CollectionPointLatitude;
+        return collectionPointLatitude;
     }
 
     public void setCollectionPointLatitude(double collectionPointLatitude) {
-        CollectionPointLatitude = collectionPointLatitude;
+        this.collectionPointLatitude = collectionPointLatitude;
     }
 
     public double getCollectionPointLongitude() {
-        return CollectionPointLongitude;
+        return collectionPointLongitude;
     }
 
     public void setCollectionPointLongitude(double collectionPointLongitude) {
-        CollectionPointLongitude = collectionPointLongitude;
+        this.collectionPointLongitude = collectionPointLongitude;
     }
 }

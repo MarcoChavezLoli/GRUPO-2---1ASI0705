@@ -11,7 +11,7 @@ public class PublicationSave {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPublicationSave;
     @Column (name = "NamePublicationSave", nullable = false, length = 100)
-    private String namePublcationSave;
+    private String namePublicationSave;
     @Column(name = "DateSave", nullable = false)
     private LocalDate dateSave;
 
@@ -23,15 +23,16 @@ public class PublicationSave {
     @JoinColumn(name = "idPublication")
     private Publication publication;
 
-    public PublicationSave(int idPublicationSave, String namePublcationSave, LocalDate dateSave, User user, Publication publication) {
+
+    public PublicationSave() {
+    }
+
+    public PublicationSave(int idPublicationSave, String namePublicationSave, LocalDate dateSave, User user, Publication publication) {
         this.idPublicationSave = idPublicationSave;
-        this.namePublcationSave = namePublcationSave;
+        this.namePublicationSave = namePublicationSave;
         this.dateSave = dateSave;
         this.user = user;
         this.publication = publication;
-    }
-
-    public PublicationSave() {
     }
 
     public int getIdPublicationSave() {
@@ -42,12 +43,12 @@ public class PublicationSave {
         this.idPublicationSave = idPublicationSave;
     }
 
-    public String getNamePublcationSave() {
-        return namePublcationSave;
+    public String getNamePublicationSave() {
+        return namePublicationSave;
     }
 
-    public void setNamePublcationSave(String namePublcationSave) {
-        this.namePublcationSave = namePublcationSave;
+    public void setNamePublicationSave(String namePublicationSave) {
+        this.namePublicationSave = namePublicationSave;
     }
 
     public LocalDate getDateSave() {
