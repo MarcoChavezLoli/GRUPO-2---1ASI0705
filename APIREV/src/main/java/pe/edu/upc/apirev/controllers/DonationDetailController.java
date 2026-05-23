@@ -20,9 +20,9 @@ public class DonationDetailController {
     private IDonationDetailService Dds;
 
     @PostMapping("/Registrar")
-    public ResponseEntity<DonationDetailDTO> Registrar(@RequestBody DonationDetailDTO dddto){
+    public ResponseEntity<DonationDetailDTO> Registrar(@RequestBody DonationDetailDTO dto){
         ModelMapper m =new ModelMapper();
-        DonationDetail Dd=m.map(dddto,DonationDetail.class);
+        DonationDetail Dd=m.map(dto,DonationDetail.class);
         DonationDetail Ddt= Dds.insert(Dd);
         DonationDetailDTO DdDto=m.map(Ddt,DonationDetailDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(DdDto);
@@ -54,21 +54,21 @@ public class DonationDetailController {
     @PutMapping("/actualizar")
     public ResponseEntity<String> actualizar(@RequestBody DonationDetailDTO Dddto) {
 
-        Optional<DonationDetail> existente = Dds.listid(Dddto.getIddetalledonacion());
+        Optional<DonationDetail> existente = Dds.listid(Dddto.getIdDonationDetail());
         if (existente.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Detalle de la Donacion no encontrada");
         }
-        if (Dddto.getFecharegistrada() == null || Dddto.getDescripciondetalle() == null) {
+        if (Dddto.getDateRegistration() == null || Dddto.getDetailDescription() == null) {
             return ResponseEntity.badRequest()
                     .body("Las fechas no pueden ser nulas ni la descripcion de la Donacion");
         }
 
         DonationDetail dd = existente.get();
 
-        dd.setDetailDescription(Dddto.getDescripciondetalle());
-        dd.setTraceabilityStatus(Dddto.isEstadotrazabilidad());
-        dd.setDateRegistration(Dddto.getFecharegistrada());
+        dd.setDetailDescription(Dddto.getDetailDescription());
+        dd.setTraceabilityStatus(Dddto.isTraceabilityStatus());
+        dd.setDateRegistration(Dddto.getDateRegistration());
 
         Dds.update(dd);
 

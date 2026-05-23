@@ -5,49 +5,49 @@ import pe.edu.upc.apirev.entities.Item;
 import java.time.LocalDate;
 
 public class DonationDetailDTO {
-    private int iddetalledonacion;
-    private String descripciondetalle;
-    private LocalDate fecharegistrada;
-    private boolean estadotrazabilidad;
-    private int Itemid;
+    private int idDonationDetail;
+    private String detailDescription;
+    private LocalDate dateRegistration;
+    private boolean traceabilityStatus;
+    private int itemId;
 
-    public int getIddetalledonacion() {
-        return iddetalledonacion;
+    public int getIdDonationDetail() {
+        return idDonationDetail;
     }
 
-    public void setIddetalledonacion(int iddetalledonacion) {
-        this.iddetalledonacion = iddetalledonacion;
+    public void setIdDonationDetail(int idDonationDetail) {
+        this.idDonationDetail = idDonationDetail;
     }
 
-    public String getDescripciondetalle() {
-        return descripciondetalle;
+    public String getDetailDescription() {
+        return detailDescription;
     }
 
-    public void setDescripciondetalle(String descripciondetalle) {
-        this.descripciondetalle = descripciondetalle;
+    public void setDetailDescription(String detailDescription) {
+        this.detailDescription = detailDescription;
     }
 
-    public LocalDate getFecharegistrada() {
-        return fecharegistrada;
+    public LocalDate getDateRegistration() {
+        return dateRegistration;
     }
 
-    public void setFecharegistrada(LocalDate fecharegistrada) {
-        this.fecharegistrada = fecharegistrada;
+    public void setDateRegistration(LocalDate dateRegistration) {
+        this.dateRegistration = dateRegistration;
     }
 
-    public boolean isEstadotrazabilidad() {
-        return estadotrazabilidad;
+    public boolean isTraceabilityStatus() {
+        return traceabilityStatus;
     }
 
-    public void setEstadotrazabilidad(boolean estadotrazabilidad) {
-        this.estadotrazabilidad = estadotrazabilidad;
+    public void setTraceabilityStatus(boolean traceabilityStatus) {
+        this.traceabilityStatus = traceabilityStatus;
     }
 
-    public int getItemid() {
-        return Itemid;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setItemid(int itemid) {
-        Itemid = itemid;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 }
