@@ -62,7 +62,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public static   PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -78,6 +78,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/location/**").permitAll()
+                        .requestMatchers("/api/Categoria/**").permitAll()
+                        .requestMatchers("/api/Material/**").permitAll()
                         .requestMatchers("/api/usuario/registrar/usuarios").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()

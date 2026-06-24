@@ -18,13 +18,14 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/Material")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MaterialController {
 
     @Autowired
     private IMaterialService mS;
 
     @GetMapping("/Material")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   // @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<MaterialDTO>> listar() {
         ModelMapper m = new ModelMapper();
         List<MaterialDTO> lista = mS.list().stream()
@@ -35,7 +36,7 @@ public class MaterialController {
     }
 
     @PostMapping("/registrar")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody MaterialDTO dto){
         ModelMapper m=new ModelMapper();
             Material material=m.map(dto, Material.class);
@@ -45,7 +46,7 @@ public class MaterialController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Material> material = mS.ListId(id);
 
@@ -59,7 +60,7 @@ public class MaterialController {
     }
 
     @PutMapping("/actualizar")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody MaterialDTO dto) {
         Optional<Material> existente = mS.ListId(dto.getIdMaterial());
         if (existente.isEmpty()) {
@@ -79,7 +80,7 @@ public class MaterialController {
 
     }
     @GetMapping("/buscartipo")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> searchByTypeNative(@RequestParam String type) {
         List<Object[]> rawList = mS.searchByTypeNative(type);
         
