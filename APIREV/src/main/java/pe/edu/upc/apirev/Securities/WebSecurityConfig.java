@@ -81,7 +81,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/Categoria/**").permitAll()
                         .requestMatchers("/api/Material/**").permitAll()
                         .requestMatchers("/api/Punto-Acopio/**").permitAll()
-                        .requestMatchers("/api/usuario/registrar/usuarios").permitAll()
+                        .requestMatchers("/api/usuario/**").permitAll()
+                        .requestMatchers("/api/usuario/registrar/usuarios/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
 
