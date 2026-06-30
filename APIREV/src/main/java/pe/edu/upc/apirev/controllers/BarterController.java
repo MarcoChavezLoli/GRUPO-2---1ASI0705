@@ -30,7 +30,7 @@ public class BarterController {
      private IBarterService bS;
 
     @GetMapping("/trueque/listar")
-    @PreAuthorize("hasAuthority('TRUEQUERO')")
+   @PreAuthorize("hasAuthority('TRUEQUERO')")
     public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
         List<Barter> lista = bS.list();
@@ -45,7 +45,7 @@ public class BarterController {
     }
 
     @PostMapping("/trueque/registrar")
-    @PreAuthorize("hasAuthority('TRUEQUERO')")
+   @PreAuthorize("hasAuthority('TRUEQUERO')")
     public ResponseEntity<?> registrar(@RequestBody BarterDTO dto) {
         if (dto.getDescriptionBarter() == null || dto.getDescriptionBarter().trim().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -64,7 +64,7 @@ public class BarterController {
                 .body("Trueque  registrado exitosamente");
     }
     @PutMapping("/trueque/actualizar")
-    @PreAuthorize("hasAuthority('TRUEQUERO')")
+   @PreAuthorize("hasAuthority('TRUEQUERO')")
     public ResponseEntity<String> actualizar(@RequestBody BarterDTO dto) {
         Optional<Barter> existente = bS.listId(dto.getIdBarter());
         if (existente.isEmpty()) {
@@ -85,7 +85,7 @@ public class BarterController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Barter> barter = bS.listId(id);
 
@@ -99,7 +99,7 @@ public class BarterController {
     }
 
     @GetMapping("/buscar/{id}")
-    @PreAuthorize("hasAuthority('TRUEQUERO')")
+   @PreAuthorize("hasAuthority('TRUEQUERO')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<Barter> barter  = bS.listId(id);

@@ -10,13 +10,14 @@ import java.util.List;
 @Repository
 public interface IBarterRepository extends JpaRepository<Barter,Integer> {
     @Query(value = """
-            select\s
-            concat (u.user_name, ' ' , u.user_last_name) as Nombre_Completo,
+            select
+            concat(u.user_name, ' ', u.user_last_name) as Nombre_Completo,
             to_char(b.date_barter,'Mon') as Fecha,
             count(b.*) as Cantidad
-            from barter b\s
+            from barter b
             inner join users u on b.id_user = u.id_user
-            group by u.user_name , u.user_last_name, b.date_barter
+            group by u.user_name, u.user_last_name, to_char(b.date_barter,'Mon')
             """, nativeQuery = true)
     public List<Object[]> findAllWithUsers();
+
 }

@@ -18,14 +18,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/Punto-Acopio")
-@CrossOrigin(origins = "http://localhost:4200")
 public class CollectionPointController {
 
     @Autowired
     private ICollectionPointService cpS;
 
     @PostMapping("/registrar")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody CollectionPointDTO dto){
         ModelMapper m=new ModelMapper();
             CollectionPoint collectionPoint =m.map(dto, CollectionPoint.class);
@@ -35,7 +34,7 @@ public class CollectionPointController {
     }
 
     @GetMapping("/listar")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> Listar(){
         ModelMapper m = new ModelMapper();
         List<CollectionPointDTO> ListaPuntoAcopio = cpS.list()
@@ -51,7 +50,7 @@ public class CollectionPointController {
 
 
     @DeleteMapping("/{id}")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
 
         Optional<CollectionPoint> collectionPoint = cpS.listId(id);
@@ -83,7 +82,7 @@ public class CollectionPointController {
     }
 
     @PutMapping("/actualizar")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody CollectionPointDTO dto) {
         Optional<CollectionPoint> existente = cpS.listId(dto.getIdCollectionPoint());
         if (existente.isEmpty()) {
@@ -105,7 +104,7 @@ public class CollectionPointController {
     }
 
 @GetMapping("/conteo-por-direccion")
-//@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> countPointsByAddress() {
         List<Object[]> rawList = cpS.countPointsByAddressNative();
         

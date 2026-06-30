@@ -21,7 +21,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -71,21 +76,17 @@ public class WebSecurityConfig {
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/location/**").permitAll()
-                        .requestMatchers("/api/Categoria/**").permitAll()
-                        .requestMatchers("/api/Material/**").permitAll()
-                        .requestMatchers("/api/Punto-Acopio/**").permitAll()
-                        .requestMatchers("/api/usuario/**").permitAll()
-                        .requestMatchers("/api/usuario/registrar/usuarios/**").permitAll()
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .anyRequest().authenticated()
-
+                                .requestMatchers("/api/auth/login").permitAll()
+                                .requestMatchers("/api/usuario/registrar/usuarios/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                                .anyRequest().authenticated()
                 )
 
                 .formLogin(AbstractHttpConfigurer::disable)
