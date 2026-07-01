@@ -23,7 +23,7 @@ public class LocationController {
     private ILocationService lS;
 
     @GetMapping("/listar/ubicaciones")
-    @PreAuthorize("hasAnyAuthority('RECOLECTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
         List <Location> loctationsExistentes = lS.list();
@@ -37,8 +37,8 @@ public class LocationController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
-    @PostMapping("/registar/ubicaciones")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/registrar/ubicaciones")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<?> registrar(@RequestBody LocationGeneralDTO dto) {
 
         if (dto.getAddressLocation() == null || dto.getAddressLocation().trim().isEmpty()) {
@@ -62,7 +62,7 @@ public class LocationController {
     }
 
     @PutMapping("/ubicaciones/actualiza")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<String> actualizar(@RequestBody LocationGeneralDTO dto) {
         Optional<Location> existente = lS.listId(dto.getIdLocation());
         if (existente.isEmpty()) {
@@ -92,7 +92,7 @@ public class LocationController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Location> location = lS.listId(id);
 
@@ -107,7 +107,7 @@ public class LocationController {
 
 
     @GetMapping("/buscar/{id}")
-    @PreAuthorize("hasAnyAuthority('RECOLECTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<Location> location = lS.listId(id);

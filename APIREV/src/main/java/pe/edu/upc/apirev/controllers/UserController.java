@@ -29,7 +29,7 @@ public class UserController {
     private IRoleService rS;
 
     @GetMapping("/usuarios/listar")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('RECOLECTOR') or hasAuthority('TRUEQUERO')")
     public ResponseEntity<List<UserGeneralDTO>> listar() {
         List<UserGeneralDTO> lista = uS.list().stream()
                 .map(user -> {

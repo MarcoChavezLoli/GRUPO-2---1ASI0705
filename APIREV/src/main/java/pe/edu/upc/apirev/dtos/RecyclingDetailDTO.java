@@ -10,6 +10,7 @@ public class RecyclingDetailDTO {
     private LocalDate registrationDate;
     private String traceabilityStatus;
     private int collectionPointId;
+    private int recyclingId;
 
     public int getRecyclingDetailsId() {
         return recyclingDetailsId;
@@ -45,6 +46,14 @@ public class RecyclingDetailDTO {
 
     public int getCollectionPointId() {
         return collectionPointId;
+    }
+
+    public int getRecyclingId() {
+        return recyclingId;
+    }
+
+    public void setRecyclingId(int recyclingId) {
+        this.recyclingId = recyclingId;
     }
 
     public void setCollectionPointId(int collectionPointId) {

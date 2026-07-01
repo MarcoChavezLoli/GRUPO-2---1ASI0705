@@ -24,7 +24,7 @@ public class CollectionPointController {
     private ICollectionPointService cpS;
 
     @PostMapping("/registrar")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody CollectionPointDTO dto){
         ModelMapper m=new ModelMapper();
             CollectionPoint collectionPoint =m.map(dto, CollectionPoint.class);
@@ -50,7 +50,7 @@ public class CollectionPointController {
 
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
 
         Optional<CollectionPoint> collectionPoint = cpS.listId(id);
@@ -67,7 +67,7 @@ public class CollectionPointController {
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   // @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<CollectionPoint> collectionPoint = cpS.listId(id);

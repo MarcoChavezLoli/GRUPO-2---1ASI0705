@@ -24,7 +24,7 @@ public class MaterialController {
     private IMaterialService mS;
 
     @GetMapping("/Material")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<MaterialDTO>> listar() {
         ModelMapper m = new ModelMapper();
         List<MaterialDTO> lista = mS.list().stream()
