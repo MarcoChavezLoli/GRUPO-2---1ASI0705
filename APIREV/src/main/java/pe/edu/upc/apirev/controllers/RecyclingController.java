@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/Reciclaje")
-//@PreAuthorize("hasAnyAuthority('ADMIN', 'RECOLECTOR', 'TRUEQUERO')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'RECOLECTOR', 'TRUEQUERO')")
 public class RecyclingController {
 
     @Autowired
