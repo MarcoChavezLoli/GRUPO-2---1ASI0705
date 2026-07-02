@@ -10,10 +10,11 @@ import java.util.List;
 
 @Repository
 public interface IProductRepository extends JpaRepository<Product,Integer> {
-    @Query(value = "SELECT p.id_product, p.conservation_status, p.name_product, p.id_barter, p.id_category " +
-            "FROM product p " +
-            "INNER JOIN category c ON p.id_category = c.id_category " +
-            "WHERE c.name_category = :nameCategory", nativeQuery = true)
-    List<Object[]> findProductsByCategory(@Param("nameCategory") String nameCategory);
+    @Query(value = "SELECT c.id_category, c.name_category, COUNT(p.id_product) AS total_productos " +
+            "FROM category c " +
+            "LEFT JOIN product p ON c.id_category = p.id_category " +
+            "GROUP BY c.id_category, c.name_category " +
+            "ORDER BY total_productos DESC", nativeQuery = true)
+    List<Object[]> countProductsByCategory();
 
 }

@@ -1,52 +1,18 @@
 package pe.edu.upc.apirev.dtos;
 
 public class QueryProductCategoryDTO {
-    private int idProduct;
-    private String nameProduct;
-    private String descriptionProduct;
-    private String conservationStatus;
-    private int idCategory;
+    private int IdCategory;
     private String nameCategory;
+    private long totalProductos;
+
     public QueryProductCategoryDTO() {}
 
-    public int getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public String getDescriptionProduct() {
-        return descriptionProduct;
-    }
-
-    public void setDescriptionProduct(String descriptionProduct) {
-        this.descriptionProduct = descriptionProduct;
-    }
-
-    public String getConservationStatus() {
-        return conservationStatus;
-    }
-
-    public void setConservationStatus(String conservationStatus) {
-        this.conservationStatus = conservationStatus;
-    }
-
     public int getIdCategory() {
-        return idCategory;
+        return IdCategory;
     }
 
     public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
+        IdCategory = idCategory;
     }
 
     public String getNameCategory() {
@@ -55,5 +21,13 @@ public class QueryProductCategoryDTO {
 
     public void setNameCategory(String nameCategory) {
         this.nameCategory = nameCategory;
+    }
+
+    public long getTotalProductos() {
+        return totalProductos;
+    }
+
+    public void setTotalProductos(long totalProductos) {
+        this.totalProductos = totalProductos;
     }
 }
