@@ -4,33 +4,33 @@ import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.entities.User;
 
 public class DonationDTO {
-    private int DonationId;
-    private String NameDonation;
-    private int ItemId;
+    private int donationId;
+    private String nameDonation;
+    private int itemId;
     private int idUser;
 
     public int getDonationId() {
-        return DonationId;
+        return donationId;
     }
 
     public void setDonationId(int donationId) {
-        DonationId = donationId;
+        this.donationId = donationId;
     }
 
     public String getNameDonation() {
-        return NameDonation;
+        return nameDonation;
     }
 
     public void setNameDonation(String nameDonation) {
-        NameDonation = nameDonation;
+        this.nameDonation = nameDonation;
     }
 
     public int getItemId() {
-        return ItemId;
+        return itemId;
     }
 
     public void setItemId(int itemId) {
-        ItemId = itemId;
+        this.itemId = itemId;
     }
 
     public int getIdUser() {

@@ -2,6 +2,7 @@ package pe.edu.upc.apirev.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,17 +45,22 @@ public class MaterialController {
             return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Material> material = mS.ListId(id);
 
-        if (material.isPresent()) {
-            mS.Delete(id);
-            return ResponseEntity.ok("Material eliminado correctamente");
-        } else {
+        if (material.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Material no encontrado");
+        }
+
+        try {
+            mS.Delete(id);
+            return ResponseEntity.ok("Material eliminado correctamente");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("No se puede eliminar el material porque está siendo utilizado en un reciclaje.");
         }
     }
 

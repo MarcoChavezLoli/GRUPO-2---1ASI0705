@@ -2,6 +2,7 @@ package pe.edu.upc.apirev.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -50,20 +51,24 @@ public class CollectionPointController {
 
 
     @DeleteMapping("/{id}")
-   @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
 
         Optional<CollectionPoint> collectionPoint = cpS.listId(id);
 
-        if (collectionPoint.isPresent()) {
-            cpS.delete(id);
-            return ResponseEntity.ok("Punto de acopio eliminado correctamente");
-        } else {
+        if (collectionPoint.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Punto de acopio no encontrado");
         }
-    }
 
+        try {
+            cpS.delete(id);
+            return ResponseEntity.ok("Punto de acopio eliminado correctamente");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("No se puede eliminar el punto de acopio porque está siendo utilizado en un detalle de reciclaje.");
+        }
+    }
 
 
     @GetMapping("/{id}")
