@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 
 @RequestMapping("/api/producto")
-@PreAuthorize("hasAnyAuthority('ADMIN','RECOLECTOR','TRUEQUERO')")
+//@PreAuthorize("hasAnyAuthority('ADMIN','RECOLECTOR','TRUEQUERO')")
 public class ProductController {
 
     @Autowired

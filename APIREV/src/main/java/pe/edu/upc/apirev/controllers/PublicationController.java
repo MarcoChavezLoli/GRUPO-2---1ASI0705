@@ -8,8 +8,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.PublicationDTO;
 import pe.edu.upc.apirev.dtos.QueryPublicationDTO;
+import pe.edu.upc.apirev.entities.Product;
 import pe.edu.upc.apirev.entities.Publication;
+import pe.edu.upc.apirev.entities.User;
+import pe.edu.upc.apirev.servicesinterfaces.IProductService;
 import pe.edu.upc.apirev.servicesinterfaces.IPublicationService;
+import pe.edu.upc.apirev.servicesinterfaces.IUserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +22,17 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/publicacion")
-@PreAuthorize("hasAnyAuthority('ADMIN','RECOLECTOR')")
+//@PreAuthorize("hasAnyAuthority('ADMIN','RECOLECTOR')")
 public class PublicationController {
 
     @Autowired
     private IPublicationService pServ;
+
+    @Autowired
+    private IUserService uS;
+
+    @Autowired
+    private IProductService pPr;
 
     @GetMapping("/publicacion/listar")
 
@@ -35,11 +45,26 @@ public class PublicationController {
     }
 
     @PostMapping("/publication/registrar")
-    public ResponseEntity<PublicationDTO> registrar(@RequestBody PublicationDTO dto) {
+    public ResponseEntity<?> registrar(@RequestBody PublicationDTO dto) {
         ModelMapper m = new ModelMapper();
-        Publication c = m.map(dto, Publication.class);
-        Publication cur = pServ.insert(c);
+
+        Optional<User> userOpt = uS.listId(dto.getIdUser());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: El usuario con ID " + dto.getIdUser() + " no existe.");
+        }
+
+        Optional<Product> prodOpt = pPr.listId(dto.getIdProduct());
+        if (prodOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: El producto con ID " + dto.getIdProduct() + " no existe.");
+        }
+        Publication publication = m.map(dto, Publication.class);
+        publication.setUser(userOpt.get());
+        publication.setProduct(prodOpt.get());
+        Publication cur = pServ.insert(publication);
         PublicationDTO responseDTO = m.map(cur, PublicationDTO.class);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
@@ -104,9 +129,9 @@ public class PublicationController {
         for (Object[] fila : listaCantidad) {
             QueryPublicationDTO dto = new QueryPublicationDTO();
 
-            dto.setIdUser(((Number) fila[0]).intValue());               // u.id_user
-            dto.setUserName((String) fila[1]);                         // u.user_name
-            dto.setTotalPublicaciones(((Number) fila[2]).longValue()); // COUNT(pub.id_publication)
+            dto.setIdUser(((Number) fila[0]).intValue());
+            dto.setUserName((String) fila[1]);
+            dto.setTotalPublicaciones(((Number) fila[2]).longValue());
 
             respuesta.add(dto);
         }
