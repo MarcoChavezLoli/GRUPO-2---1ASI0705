@@ -7,7 +7,16 @@ public class BarterDTO {
     private String descriptionBarter;
     private boolean statusBarter;
     private LocalDate dateBarter;
+    private String imageBarter;
     private int idUser;
+
+    public String getImageBarter() {
+        return imageBarter;
+    }
+
+    public void setImageBarter(String imageBarter) {
+        this.imageBarter = imageBarter;
+    }
 
     public int getIdBarter() {
         return idBarter;

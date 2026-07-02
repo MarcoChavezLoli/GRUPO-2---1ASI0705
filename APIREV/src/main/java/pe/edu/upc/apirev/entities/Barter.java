@@ -16,17 +16,21 @@ public class Barter {
     private boolean StatusBarter;
     @Column(name = "DateBarter", nullable = false)
     private LocalDate DateBarter;
+    @Column(name = "ImageBarter", columnDefinition = "TEXT")
+    private String imageBarter;
     @ManyToOne
     @JoinColumn(name = "idUser")
     private User user;
 
-    public Barter(int idBarter, String descriptionBarter, boolean statusBarter, LocalDate dateBarter, User user) {
+    public Barter(int idBarter, String descriptionBarter, boolean statusBarter, LocalDate dateBarter, String imageBarter, User user) {
         this.idBarter = idBarter;
-        this.DescriptionBarter = descriptionBarter;
-        this.StatusBarter = statusBarter;
-        this.DateBarter = dateBarter;
+        DescriptionBarter = descriptionBarter;
+        StatusBarter = statusBarter;
+        DateBarter = dateBarter;
+        this.imageBarter = imageBarter;
         this.user = user;
     }
+
     public Barter() {
 
     }
@@ -69,5 +73,13 @@ public class Barter {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getImageBarter() {
+        return imageBarter;
+    }
+
+    public void setImageBarter(String imageBarter) {
+        this.imageBarter = imageBarter;
     }
 }
