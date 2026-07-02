@@ -1,12 +1,14 @@
 package pe.edu.upc.apirev.controllers;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.apirev.dtos.DonationConditionDTO;
 import pe.edu.upc.apirev.dtos.DonationDTO;
+import pe.edu.upc.apirev.dtos.QuantityDonationUserDTO;
 import pe.edu.upc.apirev.entities.Donation;
 import pe.edu.upc.apirev.entities.Item;
 import pe.edu.upc.apirev.entities.User;
@@ -14,129 +16,215 @@ import pe.edu.upc.apirev.servicesinterfaces.IDonationService;
 import pe.edu.upc.apirev.servicesinterfaces.IItemService;
 import pe.edu.upc.apirev.servicesinterfaces.IUserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/Donacion")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/Donacion")
 public class DonationController {
-
     @Autowired
     private IDonationService Ds;
-
     @Autowired
-    private IUserService uS;
-
+    private IUserService iuS;
     @Autowired
-    private IItemService iS;
+    private IItemService itS;
 
-    private DonationDTO convertirADTO(Donation d) {
-        DonationDTO dto = new DonationDTO();
-        dto.setDonationId(d.getIdDonation());
-        dto.setNameDonation(d.getNameDonation());
 
-        if (d.getIdUser() != null) {
-            dto.setIdUser(d.getIdUser().getIdUser());
-        }
-
-        if (d.getItemId() != null) {
-            dto.setItemId(d.getItemId().getItemId());
-        }
-
-        return dto;
-    }
-
-    @PostMapping("/registrar")
+    @PostMapping("/Registrar")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> Registrar(@RequestBody DonationDTO ddto) {
+    public ResponseEntity<?> registrar(@RequestBody DonationDTO ddto) {
 
-        Optional<User> user = uS.listId(ddto.getIdUser());
-        if (user.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error al registrar la donación\nUsuario no encontrado");
-        }
+        ModelMapper m = new ModelMapper();
 
-        Optional<Item> item = iS.ListId(ddto.getItemId());
+        Optional<Item> item = itS.ListId(ddto.getItemId());
+        Optional<User> user = iuS.listId(ddto.getIdUser());
+
         if (item.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error al registrar la donación\nArtículo no encontrado");
+                    .body("Item no encontrado");
         }
 
-        Donation d = new Donation();
-        d.setNameDonation(ddto.getNameDonation());
-        d.setIdUser(user.get());
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Usuario no encontrado");
+        }
+
+        Donation d = m.map(ddto, Donation.class);
+
+        // Asignar las relaciones
         d.setItemId(item.get());
+        d.setIdUser(user.get());
 
-        Donation guardado = Ds.insert(d);
+        Donation dt = Ds.insert(d);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(convertirADTO(guardado));
+        DonationDTO respuesta = new DonationDTO();
+        respuesta.setIdDonation(dt.getIdDonation());
+        respuesta.setNameDonation(dt.getNameDonation());
+        respuesta.setItemId(dt.getItemId().getItemId());
+        respuesta.setIdUser(dt.getIdUser().getIdUser());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
     }
+
+
 
     @GetMapping("/listar")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> listar() {
-        List<DonationDTO> lista = Ds.list()
-                .stream()
-                .map(this::convertirADTO)
-                .collect(Collectors.toList());
+
+        ModelMapper m = new ModelMapper();
+
+        List<Donation> lista = Ds.list();
 
         if (lista.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No existen donaciones registradas");
+                    .body("La lista está vacía");
         }
 
-        return ResponseEntity.ok(lista);
+        List<DonationDTO> respuesta = new ArrayList<>();
+
+        for (Donation d : lista) {
+
+            DonationDTO dto = new DonationDTO();
+
+            // ModelMapper solo para los atributos simples
+            dto.setIdDonation(m.map(d.getIdDonation(), Integer.class));
+            dto.setNameDonation(m.map(d.getNameDonation(), String.class));
+
+            // Relaciones manualmente
+            dto.setItemId(d.getItemId().getItemId());
+            dto.setIdUser(d.getIdUser().getIdUser());
+
+            respuesta.add(dto);
+        }
+
+        return ResponseEntity.ok(respuesta);
     }
 
-    @GetMapping("/buscar/{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> buscarPorId(@PathVariable int id) {
-        Optional<Donation> donation = Ds.listid(id);
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
 
+        Optional<Donation> donation = Ds.listid(id);
         if (donation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Donación no encontrada");
         }
+        Ds.delete(id);
 
-        return ResponseEntity.ok(convertirADTO(donation.get()));
-    }
-
-    @DeleteMapping("/eliminar/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<String> eliminar(@PathVariable int id) {
-        Optional<Donation> donation = Ds.listid(id);
-
-        if (donation.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Donación no encontrada");
-        }
-
-        try {
-            Ds.delete(id);
-            return ResponseEntity.ok("Donación eliminada correctamente");
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("No se puede eliminar la donación porque está relacionada con otros registros.");
-        }
+        return ResponseEntity.ok("Donación eliminada correctamente");
     }
 
     @PutMapping("/actualizar")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<String> actualizar(@RequestBody DonationDTO ddto) {
+    public ResponseEntity<?> actualizar(@RequestBody DonationDTO ddto) {
 
-        Optional<Donation> existente = Ds.listid(ddto.getDonationId());
-        if (existente.isEmpty()) {
+        Optional<Donation> donation = Ds.listid(ddto.getIdDonation());
+
+        if (donation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Donación no encontrada");
         }
 
-        Donation d = existente.get();
+        Optional<Item> item = itS.ListId(ddto.getItemId());
+
+        if (item.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Item no encontrado");
+        }
+
+        Optional<User> user = iuS.listId(ddto.getIdUser());
+
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Usuario no encontrado");
+        }
+
+        Donation d = donation.get();
+
         d.setNameDonation(ddto.getNameDonation());
+        d.setItemId(item.get());
+        d.setIdUser(user.get());
 
         Ds.update(d);
 
         return ResponseEntity.ok("Donación actualizada correctamente");
     }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> listarId(@PathVariable int id) {
+
+        Optional<Donation> donation = Ds.listid(id);
+
+        if (donation.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Donación no encontrada");
+        }
+
+        ModelMapper m = new ModelMapper();
+
+        Donation d = donation.get();
+
+        DonationDTO dto = new DonationDTO();
+
+        dto.setIdDonation(m.map(d.getIdDonation(), Integer.class));
+        dto.setNameDonation(m.map(d.getNameDonation(), String.class));
+        dto.setItemId(d.getItemId().getItemId());
+        dto.setIdUser(d.getIdUser().getIdUser());
+
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/cantidad-donaciones-usuario")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> obtenerCantidadDonacionesUsuario() {
+
+        List<Object[]> lista = Ds.quantityDonationUser();
+
+        if (lista.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay registros");
+        }
+
+        List<QuantityDonationUserDTO> respuesta = new ArrayList<>();
+
+        for (Object[] fila : lista) {
+
+            QuantityDonationUserDTO dto = new QuantityDonationUserDTO();
+
+            dto.setUser((String) fila[0]);
+            dto.setQuantityDonation(((Number) fila[1]).intValue());
+
+            respuesta.add(dto);
+        }
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/cantidad-donaciones-condicion")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> obtenerCantidadDonacionesCondicion() {
+
+        List<Object[]> lista = Ds.donationCondition();
+
+        if (lista.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay registros");
+        }
+
+        List<DonationConditionDTO> respuesta = new ArrayList<>();
+
+        for (Object[] fila : lista) {
+
+            DonationConditionDTO dto = new DonationConditionDTO();
+            dto.setCondition((String) fila[0]);
+            dto.setQuantity(((Number) fila[1]).intValue());
+            respuesta.add(dto);
+        }
+
+        return ResponseEntity.ok(respuesta);
+    }
+
 }

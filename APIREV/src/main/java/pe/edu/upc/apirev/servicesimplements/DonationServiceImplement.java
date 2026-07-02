@@ -40,4 +40,14 @@ public class DonationServiceImplement implements IDonationService {
     public Optional<Donation> listid(int id) {
         return Dr.findById(id);
     }
+
+    @Override
+    public List<Object[]> quantityDonationUser() {
+        return Dr.quantityDonationUser();
+    }
+
+    @Override
+    public List<Object[]> donationCondition() {
+        return Dr.donationCondition();
+    }
 }

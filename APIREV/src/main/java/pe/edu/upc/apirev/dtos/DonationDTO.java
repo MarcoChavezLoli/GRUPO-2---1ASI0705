@@ -1,20 +1,17 @@
 package pe.edu.upc.apirev.dtos;
 
-import pe.edu.upc.apirev.entities.Item;
-import pe.edu.upc.apirev.entities.User;
-
 public class DonationDTO {
-    private int donationId;
+    private int idDonation;
     private String nameDonation;
     private int itemId;
     private int idUser;
 
-    public int getDonationId() {
-        return donationId;
+    public int getIdDonation() {
+        return idDonation;
     }
 
-    public void setDonationId(int donationId) {
-        this.donationId = donationId;
+    public void setIdDonation(int idDonation) {
+        this.idDonation = idDonation;
     }
 
     public String getNameDonation() {

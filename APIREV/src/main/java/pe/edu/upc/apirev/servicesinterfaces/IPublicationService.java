@@ -12,5 +12,5 @@ public interface IPublicationService {
     public void update(Publication p);
     public void delete(int id);
     List<Object[]> quantityPublicationsByUser();
-    
+
 }
