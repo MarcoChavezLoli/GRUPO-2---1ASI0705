@@ -11,5 +11,6 @@ public interface IPublicationService {
     public Optional<Publication> listId(int id);
     public void update(Publication p);
     public void delete(int id);
+    List<Object[]> quantityPublicationsByUser();
     
 }

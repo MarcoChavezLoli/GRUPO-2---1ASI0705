@@ -16,4 +16,5 @@ public interface IRecyclingService {
     public void delete(int id);
     public void Update(Recycling r);
     List<Object[]> quantityRecyclingNative();
+
 }

@@ -37,4 +37,10 @@ public class PublicationServiceImplement implements IPublicationService {
     public void delete(int id) { pbR.deleteById(id);
 
     }
+
+    @Override
+    public List<Object[]> quantityPublicationsByUser() {
+        return pbR.quantityPublicationsByUser();
+    }
+
 }

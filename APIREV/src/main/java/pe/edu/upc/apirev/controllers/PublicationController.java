@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.PublicationDTO;
+import pe.edu.upc.apirev.dtos.QueryPublicationDTO;
 import pe.edu.upc.apirev.entities.Publication;
 import pe.edu.upc.apirev.servicesinterfaces.IPublicationService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,7 +34,7 @@ public class PublicationController {
         return ResponseEntity.ok(lista);
     }
 
-    @PostMapping("/publication/web")
+    @PostMapping("/publication/registrar")
     public ResponseEntity<PublicationDTO> registrar(@RequestBody PublicationDTO dto) {
         ModelMapper m = new ModelMapper();
         Publication c = m.map(dto, Publication.class);
@@ -55,12 +57,12 @@ public class PublicationController {
         }
     }
 
-    @PutMapping("/publication/actualiza")
+    @PutMapping("/publication/actualizar")
     public ResponseEntity<String> actualizar(@RequestBody PublicationDTO dto) {
         Optional<Publication> existente = pServ.listId(dto.getIdPublication());
         if (existente.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Proyecto no encontrado");
+                    .body("Publicacion no encontrado");
         }
         if (dto.getCreationDate() == null) {
             return ResponseEntity.badRequest()
@@ -87,5 +89,33 @@ public class PublicationController {
                     .body("Proyecto no encontrado");
         }
     }
+
+    @GetMapping("/cantidad-publicaciones-usuario")
+    public ResponseEntity<?> obtenerCantidadPublicacionesUsuario() {
+
+        List<Object[]> listaCantidad = pServ.quantityPublicationsByUser();
+
+        if (listaCantidad.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No hay Publicaciones");
+        }
+
+        List<QueryPublicationDTO> respuesta = new ArrayList<>();
+        for (Object[] fila : listaCantidad) {
+            QueryPublicationDTO dto = new QueryPublicationDTO();
+
+            dto.setIdUser(((Number) fila[0]).intValue());               // u.id_user
+            dto.setUserName((String) fila[1]);                         // u.user_name
+            dto.setTotalPublicaciones(((Number) fila[2]).longValue()); // COUNT(pub.id_publication)
+
+            respuesta.add(dto);
+        }
+        return ResponseEntity.ok(respuesta);
+    }
+
+
+
+
+
 
 }
