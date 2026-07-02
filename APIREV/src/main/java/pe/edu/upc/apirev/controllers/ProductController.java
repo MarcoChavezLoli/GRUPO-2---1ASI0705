@@ -116,12 +116,72 @@ public class ProductController {
         return productDTO;
     }
 
-    @PutMapping
-    public ResponseEntity<String> actualizar(@RequestBody ProductDTO dto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable int id, @RequestBody ProductDTO dto) {
+        Optional<Product> existente = pPr.listId(id);
+        if (existente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Producto no encontrado");
+        }
+
+        if (dto.getNameProduct() == null || dto.getNameProduct().trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El nombre del producto es obligatorio.");
+        }
+
+        if (dto.getNameProduct().length() < 3) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El nombre del producto debe tener al menos 3 caracteres.");
+        }
+
+        if (dto.getDescriptionProduct() == null || dto.getDescriptionProduct().trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La descripción del producto es obligatoria.");
+        }
+
+        if (dto.getConservationStatus() == null || dto.getConservationStatus().trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El estado de conservación es obligatorio.");
+        }
+
+        if (dto.getIdBarter() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Debe seleccionar un trueque válido.");
+        }
+
+        if (dto.getIdCategory() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Debe seleccionar una categoría válida.");
+        }
+
+        Optional<Barter> barter = bS.listId(dto.getIdBarter());
+        if (barter.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("El trueque no existe.");
+        }
+
+        // Verificar que exista la categoría
+        Optional<Category> category = cS.ListId(dto.getIdCategory());
+        if (category.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("La categoría no existe.");
+        }
+
         ModelMapper m = new ModelMapper();
-        Product p = m.map(dto, Product.class);
-        pPr.update(p);
-        return ResponseEntity.ok("Producto actualizado correctamente");
+        m.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        Product product = existente.get();
+
+        // Mapear los campos del DTO al producto existente
+        m.map(dto, product);
+
+        // Asignar el ID y las entidades correspondientes para garantizar consistencia
+        product.setIdProduct(id);
+        product.setBarter(barter.get());
+        product.setCategory(category.get());
+
+        pPr.update(product);
+        ProductDTO responseDTO = toDtoProduct(product);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping("/{id}")
