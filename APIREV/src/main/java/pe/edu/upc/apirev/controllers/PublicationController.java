@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/publicacion")
-//@PreAuthorize("hasAnyAuthority('ADMIN','RECOLECTOR')")
+@PreAuthorize("hasAnyAuthority('ADMIN','RECOLECTOR', 'TRUEQUERO')")
 public class PublicationController {
 
     @Autowired

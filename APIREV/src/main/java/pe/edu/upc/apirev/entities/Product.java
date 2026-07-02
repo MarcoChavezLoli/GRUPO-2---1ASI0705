@@ -20,20 +20,21 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "idBarter")
     private Barter barter;
+
     @ManyToOne
-    @JoinColumn(name="IdCategory")
+    @JoinColumn(name = "IdCategory")
     private Category category;
+
+    public Product() {
+    }
 
     public Product(int idProduct, String nameProduct, String descriptionProduct, String conservationStatus, Barter barter, Category category) {
         this.idProduct = idProduct;
-        this.NameProduct = nameProduct;
-        this.DescriptionProduct = descriptionProduct;
-        this.ConservationStatus = conservationStatus;
+        NameProduct = nameProduct;
+        DescriptionProduct = descriptionProduct;
+        ConservationStatus = conservationStatus;
         this.barter = barter;
         this.category = category;
-    }
-    public Product(){
-
     }
 
     public int getIdProduct() {
