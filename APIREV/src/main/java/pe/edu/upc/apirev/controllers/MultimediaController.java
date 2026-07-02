@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import pe.edu.upc.apirev.dtos.MultimediaDTO;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/multimedia")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 public class MultimediaController {
     @Autowired
     private IMultimediaService mService;
