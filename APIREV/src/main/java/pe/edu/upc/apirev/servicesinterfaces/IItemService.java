@@ -12,4 +12,5 @@ public interface IItemService {
     public Optional<Item> ListId(int id);
     public void Delete(int id);
     public void Update(Item i);
+    List<Object[]>quantityItemNative();
 }

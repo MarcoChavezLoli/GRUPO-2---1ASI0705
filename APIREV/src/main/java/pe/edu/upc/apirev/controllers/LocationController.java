@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.apirev.dtos.LocationDTO;
 import pe.edu.upc.apirev.dtos.LocationGeneralDTO;
@@ -17,25 +18,46 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/location")
+@PreAuthorize("hasAnyAuthority('ADMIN','RECOLECTOR','TRUEQUERO')")
 public class LocationController {
     @Autowired
     private ILocationService lS;
 
     @GetMapping("/listar/ubicaciones")
-    public ResponseEntity<List<LocationDTO>> listar() {
+    public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
-        List<LocationDTO> lista = lS.list().stream()
-                .map(y -> m.map(y, LocationDTO.class))
+        List <Location> loctationsExistentes = lS.list();
+        if(loctationsExistentes.isEmpty())
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No existen Ubicaciones");
+        }
+        List<LocationGeneralDTO> lista = loctationsExistentes.stream()
+                .map(y -> m.map(y, LocationGeneralDTO.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
-    @PostMapping("/registar/ubicaciones")
-    public ResponseEntity<LocationGeneralDTO> registrar(@RequestBody LocationGeneralDTO dto){
-        ModelMapper m=new ModelMapper();
-        Location c=m.map(dto, Location.class);
-        Location cur= lS.insert(c);
-        LocationGeneralDTO responseDTO=m.map(cur,LocationGeneralDTO.class);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    @PostMapping("/registrar/ubicaciones")
+    public ResponseEntity<?> registrar(@RequestBody LocationGeneralDTO dto) {
+
+        if (dto.getAddressLocation() == null || dto.getAddressLocation().trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La dirección de la ubicación no puede estar vacía.");
+        }
+
+        if (dto.getDistrictLocation() == null || dto.getDistrictLocation().trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El nombre del distrito no puede estar vacío.");
+        }
+        if (dto.getLatitudeLocation() == null || dto.getLongitudeLocation() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Las coordenadas (latitud y longitud) son obligatorias.");
+        }
+        ModelMapper m = new ModelMapper();
+        Location c = m.map(dto, Location.class);
+        lS.insert(c);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Ubicación creada exitosamente ");
     }
 
     @PutMapping("/ubicaciones/actualiza")
@@ -45,13 +67,26 @@ public class LocationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Ubicacion no encontrado");
         }
+        if (dto.getAddressLocation() == null || dto.getAddressLocation().trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La dirección de la ubicación no puede estar vacía.");
+        }
+
+        if (dto.getDistrictLocation() == null || dto.getDistrictLocation().trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El nombre del distrito no puede estar vacío.");
+        }
+        if (dto.getLatitudeLocation() == null || dto.getLongitudeLocation() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Las coordenadas (latitud y longitud) son obligatorias.");
+        }
         Location l = existente.get();
         l.setDistrictLocation(dto.getDistrictLocation());
         l.setAddressLocation( dto.getAddressLocation());
         l.setLatitudeLocation(dto.getLatitudeLocation());
         l.setLongitudeLocation(dto.getLongitudeLocation());
         lS.update(l);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Ubicacion Actualizado Correctamente");
+        return ResponseEntity.status(HttpStatus.OK).body("Ubicacion Actualizado Correctamente");
     }
 
     @DeleteMapping("/eliminar/{id}")

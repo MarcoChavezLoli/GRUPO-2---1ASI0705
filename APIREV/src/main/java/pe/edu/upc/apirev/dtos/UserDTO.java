@@ -1,17 +1,18 @@
 package pe.edu.upc.apirev.dtos;
 
 
+
+
 import java.time.LocalDate;
 
 public class UserDTO {
     private int idUser;
-    private String UserName;
-    private String UserLastName;
-    private String UserIdentityDocument;
-    private String UserEmail;
-    private String UserPassword;
-    private LocalDate UserRegistrationDate;
-    private int idRole;
+    private String userName;
+    private String userLastName;
+    private String userIdentityDocument;
+    private String userEmail;
+    private LocalDate userRegistrationDate;
+    private String userPassword;
 
     public int getIdUser() {
         return idUser;
@@ -22,58 +23,50 @@ public class UserDTO {
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getUserLastName() {
-        return UserLastName;
+        return userLastName;
     }
 
     public void setUserLastName(String userLastName) {
-        UserLastName = userLastName;
+        this.userLastName = userLastName;
     }
 
     public String getUserIdentityDocument() {
-        return UserIdentityDocument;
+        return userIdentityDocument;
     }
 
     public void setUserIdentityDocument(String userIdentityDocument) {
-        UserIdentityDocument = userIdentityDocument;
+        this.userIdentityDocument = userIdentityDocument;
     }
 
     public String getUserEmail() {
-        return UserEmail;
+        return userEmail;
     }
 
     public void setUserEmail(String userEmail) {
-        UserEmail = userEmail;
-    }
-
-    public String getUserPassword() {
-        return UserPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        UserPassword = userPassword;
+        this.userEmail = userEmail;
     }
 
     public LocalDate getUserRegistrationDate() {
-        return UserRegistrationDate;
+        return userRegistrationDate;
     }
 
     public void setUserRegistrationDate(LocalDate userRegistrationDate) {
-        UserRegistrationDate = userRegistrationDate;
+        this.userRegistrationDate = userRegistrationDate;
     }
 
-    public int getIdRole() {
-        return idRole;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setIdRole(int idRole) {
-        this.idRole = idRole;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 }

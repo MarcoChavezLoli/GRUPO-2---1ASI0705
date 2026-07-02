@@ -2,40 +2,40 @@ package pe.edu.upc.apirev.dtos;
 
 public class CategoryDTO {
 
-    private int IdCategory;
-    private String NameCategory;
-    private String DescriptionCategory;
-    private boolean StatusCategory;
+    private int idCategory;
+    private String nameCategory;
+    private String descriptionCategory;
+    private boolean stateCategory;
 
     public int getIdCategory() {
-        return IdCategory;
+        return idCategory;
     }
 
     public void setIdCategory(int idCategory) {
-        IdCategory = idCategory;
+        this.idCategory = idCategory;
     }
 
     public String getNameCategory() {
-        return NameCategory;
+        return nameCategory;
     }
 
     public void setNameCategory(String nameCategory) {
-        NameCategory = nameCategory;
+        this.nameCategory = nameCategory;
     }
 
     public String getDescriptionCategory() {
-        return DescriptionCategory;
+        return descriptionCategory;
     }
 
     public void setDescriptionCategory(String descriptionCategory) {
-        DescriptionCategory = descriptionCategory;
+        this.descriptionCategory = descriptionCategory;
     }
 
-    public boolean isStatusCategory() {
-        return StatusCategory;
+    public boolean isStateCategory() {
+        return stateCategory;
     }
 
-    public void setStatusCategory(boolean statusCategory) {
-        StatusCategory = statusCategory;
+    public void setStateCategory(boolean stateCategory) {
+        this.stateCategory = stateCategory;
     }
 }

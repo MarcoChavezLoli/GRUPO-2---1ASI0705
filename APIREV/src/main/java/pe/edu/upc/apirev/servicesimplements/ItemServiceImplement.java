@@ -38,4 +38,9 @@ public class ItemServiceImplement implements IItemService {
     public void Update(Item i) {
         iR.save(i);
     }
+
+    @Override
+    public List<Object[]> quantityItemNative() {
+        return iR.quantityItemByCategory();
+    }
 }

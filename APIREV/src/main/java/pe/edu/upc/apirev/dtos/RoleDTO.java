@@ -1,11 +1,22 @@
 package pe.edu.upc.apirev.dtos;
 
 public class RoleDTO {
-    private String NameRole;
-    public String getNameRole() {
-        return NameRole;
+    private int idRole;
+    private String nameRole;
+
+    public int getIdRole() {
+        return idRole;
     }
+
+    public void setIdRole(int idRole) {
+        this.idRole = idRole;
+    }
+
+    public String getNameRole() {
+        return nameRole;
+    }
+
     public void setNameRole(String nameRole) {
-        NameRole = nameRole;
+        this.nameRole = nameRole;
     }
 }

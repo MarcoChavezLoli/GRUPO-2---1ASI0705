@@ -1,32 +1,45 @@
 package pe.edu.upc.apirev.dtos;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import pe.edu.upc.apirev.entities.User;
+
 public class RecyclingDTO {
-    private int RecyclingId;
-    private String RecyclingName;
-    // private int idmaterial;
-    private int Userid;
+    private int recyclingId;
+    private String recyclingName;
+    private int idMaterial;
+    private int idUser;
 
     public int getRecyclingId() {
-        return RecyclingId;
+        return recyclingId;
     }
 
     public void setRecyclingId(int recyclingId) {
-        RecyclingId = recyclingId;
+        this.recyclingId = recyclingId;
     }
 
     public String getRecyclingName() {
-        return RecyclingName;
+        return recyclingName;
     }
 
     public void setRecyclingName(String recyclingName) {
-        RecyclingName = recyclingName;
+        this.recyclingName = recyclingName;
     }
 
-    public int getUserid() {
-        return Userid;
+    public int getIdMaterial() {
+        return idMaterial;
     }
 
-    public void setUserid(int userid) {
-        Userid = userid;
+    public void setIdMaterial(int idMaterial) {
+        this.idMaterial = idMaterial;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 }

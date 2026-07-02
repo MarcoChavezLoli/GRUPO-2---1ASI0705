@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class PublicationDTO {
     private int idPublication;
-    private String NamePublication;
-    private String TypePublication;
-    private LocalDate CreationDate;
-    private boolean Status;
+    private String namePublication;
+    private String typePublication;
+    private LocalDate creationDate;
+    private boolean status;
     private int idUser;
     private int idProduct;
 
@@ -20,35 +20,35 @@ public class PublicationDTO {
     }
 
     public String getNamePublication() {
-        return NamePublication;
+        return namePublication;
     }
 
     public void setNamePublication(String namePublication) {
-        NamePublication = namePublication;
+        this.namePublication = namePublication;
     }
 
     public String getTypePublication() {
-        return TypePublication;
+        return typePublication;
     }
 
     public void setTypePublication(String typePublication) {
-        TypePublication = typePublication;
+        this.typePublication = typePublication;
     }
 
     public LocalDate getCreationDate() {
-        return CreationDate;
+        return creationDate;
     }
 
     public void setCreationDate(LocalDate creationDate) {
-        CreationDate = creationDate;
+        this.creationDate = creationDate;
     }
 
     public boolean isStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(boolean status) {
-        Status = status;
+        this.status = status;
     }
 
     public int getIdUser() {
@@ -66,5 +66,4 @@ public class PublicationDTO {
     public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
     }
-
 }

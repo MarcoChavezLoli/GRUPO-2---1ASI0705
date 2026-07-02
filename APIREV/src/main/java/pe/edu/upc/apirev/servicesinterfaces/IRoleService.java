@@ -12,4 +12,6 @@ public interface IRoleService {
     public void update(Role r);
     public void delete(int id);
     List<Object[]> quantityRoleByUser();
+    public  void deleteByUserId(int userId);
+
 }
