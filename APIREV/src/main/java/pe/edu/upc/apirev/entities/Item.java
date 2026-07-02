@@ -8,7 +8,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int itemId;
+    private int ItemId;
 
     @Column(name = "ItemName", length = 50,nullable = false)
     private String ItemName;
@@ -28,7 +28,7 @@ public class Item {
     public Item() {}
 
     public Item(int itemId, String itemName, String itemDescription, String itemCondition, Category category) {
-        this.itemId = itemId;
+        ItemId = itemId;
         ItemName = itemName;
         ItemDescription = itemDescription;
         ItemCondition = itemCondition;
@@ -36,11 +36,11 @@ public class Item {
     }
 
     public int getItemId() {
-        return itemId;
+        return ItemId;
     }
 
     public void setItemId(int itemId) {
-        this.itemId = itemId;
+        ItemId = itemId;
     }
 
     public String getItemName() {

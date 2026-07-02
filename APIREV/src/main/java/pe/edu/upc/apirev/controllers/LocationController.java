@@ -18,13 +18,12 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/location")
-@CrossOrigin(origins = "http://localhost:4200")
 public class LocationController {
     @Autowired
     private ILocationService lS;
 
     @GetMapping("/listar/ubicaciones")
-    //@PreAuthorize("hasAnyAuthority('RECOLECTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
         List <Location> loctationsExistentes = lS.list();
@@ -39,7 +38,7 @@ public class LocationController {
         return ResponseEntity.ok(lista);
     }
     @PostMapping("/registrar/ubicaciones")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<?> registrar(@RequestBody LocationGeneralDTO dto) {
 
         if (dto.getAddressLocation() == null || dto.getAddressLocation().trim().isEmpty()) {
@@ -63,7 +62,7 @@ public class LocationController {
     }
 
     @PutMapping("/ubicaciones/actualiza")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<String> actualizar(@RequestBody LocationGeneralDTO dto) {
         Optional<Location> existente = lS.listId(dto.getIdLocation());
         if (existente.isEmpty()) {
@@ -93,7 +92,7 @@ public class LocationController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Location> location = lS.listId(id);
 
@@ -108,7 +107,7 @@ public class LocationController {
 
 
     @GetMapping("/buscar/{id}")
-   // @PreAuthorize("hasAnyAuthority('RECOLECTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('RECOLECTOR')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<Location> location = lS.listId(id);

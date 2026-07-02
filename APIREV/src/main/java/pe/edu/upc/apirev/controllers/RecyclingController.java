@@ -43,7 +43,7 @@ public class RecyclingController {
     }
 
     @PostMapping("/registrar")
-    @PreAuthorize("hasAnyAuthority('RECOLECTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'RECOLECTOR')")
     public ResponseEntity<?> registrar(@RequestBody RecyclingDTO dto) {
         ModelMapper m = new ModelMapper();
         Optional<User> User = uS.listId(dto.getIdUser());

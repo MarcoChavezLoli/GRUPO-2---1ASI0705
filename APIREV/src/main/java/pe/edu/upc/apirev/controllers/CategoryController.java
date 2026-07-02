@@ -16,14 +16,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/Categoria")
-@CrossOrigin(origins = "http://localhost:4200")
 public class CategoryController {
     @Autowired
     private ICategoryService cS;
 
 
     @GetMapping("/listar/categorias")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> listar() {
         ModelMapper m = new ModelMapper();
         List<CategoryDTO> lista = cS.list().stream()
@@ -37,7 +36,7 @@ public class CategoryController {
     }
 
     @PostMapping("/registrar")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> registrar(@RequestBody CategoryDTO dto){
         if (dto.getDescriptionCategory() == null || dto.getNameCategory() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -52,7 +51,7 @@ public class CategoryController {
 
 
     @DeleteMapping("/eliminar/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<Category> category = cS.ListId(id);
 
@@ -66,7 +65,7 @@ public class CategoryController {
     }
 
     @PutMapping("/actualizar")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody CategoryDTO dto) {
         Optional<Category> existente = cS.ListId(dto.getIdCategory());
         if (existente.isEmpty()) {
@@ -85,7 +84,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<Category> category = cS.ListId(id);

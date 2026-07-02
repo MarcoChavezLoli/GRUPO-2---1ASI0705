@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/usuario")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     private IUserService uS;
@@ -30,7 +29,7 @@ public class UserController {
     private IRoleService rS;
 
     @GetMapping("/usuarios/listar")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('RECOLECTOR') or hasAuthority('TRUEQUERO')")
     public ResponseEntity<List<UserGeneralDTO>> listar() {
         List<UserGeneralDTO> lista = uS.list().stream()
                 .map(user -> {
@@ -89,7 +88,7 @@ public class UserController {
 
 
     @PutMapping("/usuarios/actualizar")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> actualizar(@RequestBody UserDTO dto) {
         Optional<User> existente = uS.listId(dto.getIdUser());
         if (existente.isEmpty()) {
@@ -121,7 +120,7 @@ public class UserController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> eliminar(@PathVariable int id) {
         Optional<User> user = uS.listId(id);
 
@@ -136,7 +135,7 @@ public class UserController {
     }
 
     @GetMapping("/buscar/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
         ModelMapper m = new ModelMapper();
         Optional<User> user = uS.listId(id);
@@ -151,7 +150,7 @@ public class UserController {
     }
 
     @GetMapping("/lista-usuarios-trueque")
-   // @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?>obtenerListaUsuarioSinTrueque(){
         List<Object[]> lista=uS.usersWithoutBarter();
         if(lista.isEmpty()){

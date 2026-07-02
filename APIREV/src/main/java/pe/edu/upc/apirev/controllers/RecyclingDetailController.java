@@ -28,7 +28,7 @@ public class RecyclingDetailController {
     @Autowired
     private ICollectionPointService cpS;
 
-    @GetMapping("/DetallesRecilajes")
+    @GetMapping("/DetallesReciclajes")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RecyclingDetailDTO>> listar() {
         ModelMapper m = new ModelMapper();

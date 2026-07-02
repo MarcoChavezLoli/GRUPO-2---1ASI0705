@@ -13,7 +13,7 @@ public class Donation {
     private String nameDonation;
 
     @ManyToOne
-    @JoinColumn(name = "itemId")
+    @JoinColumn(name = "ItemId")
     private Item itemId;
 
     @ManyToOne

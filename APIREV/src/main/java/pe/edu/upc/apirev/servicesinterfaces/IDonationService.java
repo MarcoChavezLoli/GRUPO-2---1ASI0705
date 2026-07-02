@@ -11,4 +11,6 @@ public interface IDonationService {
     public void update(Donation d);
     public void delete (int id);
     public Optional<Donation> listid(int id);
+    List<Object[]>quantityDonationUser();
+    List<Object[]>donationCondition();
 }
