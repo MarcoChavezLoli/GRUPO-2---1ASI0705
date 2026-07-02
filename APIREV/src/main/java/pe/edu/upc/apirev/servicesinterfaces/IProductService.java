@@ -11,6 +11,7 @@ public interface IProductService {
     public void update(Product p);
     public Optional<Product> listId(int id);
     public void delete(int id);
+    List<Object[]> countProductsByCategory();
 
-    List<Object[]> getProductsByCategory(String nameCategory);
+
 }

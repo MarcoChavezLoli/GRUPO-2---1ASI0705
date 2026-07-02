@@ -42,6 +42,7 @@ public class ProductController {
         Product cur = pPr.insert(p);
         ProductDTO responseDTO = m.map(cur, ProductDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+
     }
 
     @PutMapping
@@ -79,27 +80,29 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/lista-producto-category")
-    public ResponseEntity<?> getByCategory(@RequestParam String name) {
+    @GetMapping("/cantidad-productos-categoria")
+    public ResponseEntity<?> cantidadProductosPorCategoria() {
 
-        List<Object[]> listaproducto = pPr.getProductsByCategory(name);
-        if (listaproducto.isEmpty()) {
+        List<Object[]> lista = pPr.countProductsByCategory();
+
+        if (lista.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No se encontraron productos para la categoría especificada: " + name);
+                    .body("No existen categorías registradas.");
         }
 
         List<QueryProductCategoryDTO> respuesta = new ArrayList<>();
-        for (Object[] fila : listaproducto) {
+
+        for (Object[] fila : lista) {
+
             QueryProductCategoryDTO dto = new QueryProductCategoryDTO();
 
-            dto.setIdProduct(((Number) fila[0]).intValue());
-            dto.setNameProduct((String) fila[1]);
-            dto.setDescriptionProduct((String) fila[2]);
-            dto.setConservationStatus((String) fila[3]);
-            dto.setIdCategory(((Number) fila[4]).intValue());
-            dto.setNameCategory((String) fila[5]);
+            dto.setIdCategory(((Number) fila[0]).intValue());
+            dto.setNameCategory((String) fila[1]);
+            dto.setTotalProductos(((Number) fila[2]).longValue());
+
             respuesta.add(dto);
         }
+
         return ResponseEntity.ok(respuesta);
     }
 
