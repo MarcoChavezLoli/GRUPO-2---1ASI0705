@@ -41,4 +41,9 @@ public class ProductServiceImplement implements IProductService {
 
     }
 
+    @Override
+    public List<Object[]> getProductsByCategory(String nameCategory) {
+        return pRe.findProductsByCategory(nameCategory);
+    }
+
 }

@@ -12,4 +12,5 @@ public interface IProductService {
     public Optional<Product> listId(int id);
     public void delete(int id);
 
+    List<Object[]> getProductsByCategory(String nameCategory);
 }
