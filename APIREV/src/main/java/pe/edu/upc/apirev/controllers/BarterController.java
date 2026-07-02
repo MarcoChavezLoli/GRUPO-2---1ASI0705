@@ -77,6 +77,7 @@ public class BarterController {
         b.setDateBarter(dto.getDateBarter());
         b.setDescriptionBarter(dto.getDescriptionBarter());
         b.setDateBarter(dto.getDateBarter());
+        b.setImageBarter(dto.getImageBarter());
 
         bS.update(b);
         return ResponseEntity.status(HttpStatus.OK).body("Trueque Actualizado Correctamente");
