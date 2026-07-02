@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Donacion")
+@RequestMapping("/api/Donacion")
 public class DonationController {
     @Autowired
     private IDonationService Ds;
@@ -32,7 +32,7 @@ public class DonationController {
 
 
     @PostMapping("/Registrar")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('RECOLECTOR') or hasAuthority('TRUEQUERO')")
     public ResponseEntity<?> registrar(@RequestBody DonationDTO ddto) {
 
         ModelMapper m = new ModelMapper();
@@ -67,10 +67,8 @@ public class DonationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
     }
 
-
-
     @GetMapping("/listar")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')or hasAuthority('RECOLECTOR') or hasAuthority('TRUEQUERO')")
     public ResponseEntity<?> listar() {
 
         ModelMapper m = new ModelMapper();
@@ -178,7 +176,7 @@ public class DonationController {
     }
 
     @GetMapping("/cantidad-donaciones-usuario")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TRUEQUERO')")
     public ResponseEntity<?> obtenerCantidadDonacionesUsuario() {
 
         List<Object[]> lista = Ds.quantityDonationUser();
@@ -204,7 +202,7 @@ public class DonationController {
     }
 
     @GetMapping("/cantidad-donaciones-condicion")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('TRUEQUERO')")
     public ResponseEntity<?> obtenerCantidadDonacionesCondicion() {
 
         List<Object[]> lista = Ds.donationCondition();
