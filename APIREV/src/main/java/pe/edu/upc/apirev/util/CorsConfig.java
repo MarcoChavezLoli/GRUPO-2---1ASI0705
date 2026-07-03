@@ -16,9 +16,9 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
                                 "http://localhost:4200",
-                                "https://grupo2revive-git-main-revive6.vercel.app/",
+                                "https://grupo2revive-git-main-revive6.vercel.app",
                                 "https://grupo2revive.vercel.app",
-                                "https://grupo2revive-9s54241b1-revive6.vercel.app/"
+                                "https://grupo2revive-9s54241b1-revive6.vercel.app"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
