@@ -35,9 +35,8 @@ public class ProductController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<ProductDTO>> listar() {
-        ModelMapper m = new ModelMapper();
         List<ProductDTO> lista = pPr.list().stream()
-                .map(y -> m.map(y, ProductDTO.class))
+                .map(this::toDtoProduct)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
@@ -186,12 +185,10 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
-        ModelMapper m = new ModelMapper();
         Optional<Product> product = pPr.listId(id);
 
         if (product.isPresent()) {
-            ProductDTO dto = m.map(product.get(), ProductDTO.class);
-            return ResponseEntity.ok(dto);
+            return ResponseEntity.ok(toDtoProduct(product.get()));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Producto no encontrado");
